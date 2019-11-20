@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int NOTIFY_ME_ID = 1337;
+    // id for Notification Channel
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
+
 
     private BroadcastReceiver the_receiver = new BroadcastReceiver() {
         @Override
