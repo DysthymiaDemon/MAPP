@@ -4,9 +4,10 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/sp_icon"
         android:label="@string/app_name"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
         <activity android:name=".SplashScreen">
             <intent-filter>
@@ -16,16 +17,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"
-            android:label="Homepage">
+            android:label="@string/home_page">
         </activity>
         <activity android:name=".MarkAttendanceActivity"
-            android:label="Mark Attendance">
+            android:label="@string/mark_attn">
         </activity>
         <activity android:name=".AttendanceSummaryActivity"
-            android:label="Attendance Summary">
+            android:label="@string/attn_summ">
         </activity>
         <activity android:name=".ToEmployerActivity"
-            android:label="To Employer">
+            android:label="@string/to_employer">
+        </activity>
+        <activity android:name=".Settings"
+            android:label="@string/settings">
         </activity>
         
     </application>
