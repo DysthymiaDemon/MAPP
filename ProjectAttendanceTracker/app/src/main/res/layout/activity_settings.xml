@@ -7,30 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".Settings">
 
-    <Button
-        android:id="@+id/payslip"
-        android:layout_width="320dp"
-        android:layout_height="55dp"
-        android:text="@string/payslip"
-        android:onClick="onClick"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/logout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.217" />
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="320dp"
-        android:layout_height="55dp"
-        android:text="@string/logout"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+    <ImageButton
+        android:id="@+id/viewPayslip"
+        android:layout_width="380dp"
+        android:layout_height="130dp"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.868" />
+        app:layout_constraintVertical_bias="0.19999999"
+        app:srcCompat="@drawable/viewpayslip" />
+
+    <ImageButton
+        android:id="@+id/logout"
+        android:layout_width="400dp"
+        android:layout_height="70dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewPayslip"
+        app:layout_constraintVertical_bias="0.78"
+        app:srcCompat="@drawable/logout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

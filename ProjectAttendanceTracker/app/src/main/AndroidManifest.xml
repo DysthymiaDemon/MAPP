@@ -28,6 +28,9 @@
         <activity android:name=".ToEmployerActivity"
             android:label="@string/to_employer">
         </activity>
+        <activity android:name=".Settings"
+            android:label="@string/settings">
+        </activity>
         
     </application>
 

@@ -8,4 +8,6 @@
     <string name="settings">设定值</string>
     <string name="payslip">查看工资单</string>
     <string name="logout">登出</string>
+    <string name="attn_code">考勤代码</string>
+    <string name="submit">提交</string>
 </resources>

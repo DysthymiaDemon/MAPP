@@ -7,46 +7,44 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/attendanceSummary"
-        android:layout_width="370dp"
-        android:layout_height="100dp"
+    <ImageButton
+        android:id="@+id/markAttn"
+        android:layout_width="380dp"
+        android:layout_height="130dp"
+        android:scaleType="fitCenter"
         android:onClick="onClick"
-        android:text="@string/attn_summ"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/Employer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/markAttendance"
-        app:layout_constraintVertical_bias="0.495" />
-
-    <Button
-        android:id="@+id/Employer"
-        android:onClick="onClick"
-        android:layout_width="370dp"
-        android:layout_height="100dp"
-        android:text="@string/to_employer"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.695" />
+        app:layout_constraintVertical_bias="0.274"
+        app:srcCompat="@drawable/markattendance" />
 
-    <Button
-        android:id="@+id/markAttendance"
+    <ImageButton
+        android:id="@+id/attnSumm"
+        android:layout_width="380dp"
+        android:layout_height="130dp"
+        android:scaleType="fitCenter"
         android:onClick="onClick"
-        android:layout_width="370dp"
-        android:layout_height="100dp"
-        android:text="@string/mark_attn"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@+id/toEmployer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/markAttn"
+        app:srcCompat="@drawable/attendancesummary" />
+
+    <ImageButton
+        android:id="@+id/toEmployer"
+        android:layout_width="380dp"
+        android:layout_height="130dp"
+        android:scaleType="fitCenter"
+        android:onClick="onClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.236" />
-
+        app:layout_constraintVertical_bias="0.828"
+        app:srcCompat="@drawable/toemployer" />
 </androidx.constraintlayout.widget.ConstraintLayout>
