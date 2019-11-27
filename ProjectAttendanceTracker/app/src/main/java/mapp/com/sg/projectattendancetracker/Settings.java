@@ -44,36 +44,30 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
     public void onClick (View view){
         switch (view.getId()){
             case R.id.logout:
-                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-                homeIntent.addCategory(Intent.CATEGORY_HOME);
-                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(homeIntent);
-//                Toast.makeText(getApplicationContext(),"Logout...",
-//                        Toast.LENGTH_SHORT).show();
-//
-//                AlertDialog alertDialog = new AlertDialog.Builder(Settings.this).create();
-//                alertDialog.setTitle("Logout");
-//                alertDialog.setMessage("Are you sure you want to log out?");
-//
-//                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "NO",
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                            }
-//                        });
-//                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "YES",
-//                        new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
-//                                homeIntent.addCategory(Intent.CATEGORY_HOME);
-//                                homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                                startActivity(homeIntent);
-//                            }
-//                        }
-//
-//                );
-//                alertDialog.show();
+                Toast.makeText(getApplicationContext(),"Logout...",
+                        Toast.LENGTH_SHORT).show();
+
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                //Yes button clicked
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                break;
+
+                        }
+                    }
+                };
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Are you sure you want to log out?")
+                        .setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
+
                 break;
 
             case R.id.viewPayslip:
