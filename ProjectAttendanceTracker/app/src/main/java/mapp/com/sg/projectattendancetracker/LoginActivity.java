@@ -9,12 +9,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
     }
 
     @Override
@@ -28,10 +28,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
-            case R.id.settings:
-                Intent settingsIntent = new Intent(this, Settings.class);
-                startActivity(settingsIntent);
-                break;
+            //to complete
+            //case R.id.settings:
+                //Intent settingsIntent = new Intent(this, Settings.class);
+                //startActivity(settingsIntent);
+                //break;
         }
 
     return false;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view){
         switch (view.getId()){
+            //use as reference
             //case R.id.markAttn:
                 //Intent markAttnIntent = new Intent(this, MarkAttendanceActivity.class);
                 //startActivity(markAttnIntent);

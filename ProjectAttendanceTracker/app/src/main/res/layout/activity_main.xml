@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
     <ImageButton
         android:id="@+id/markAttn"
@@ -18,8 +18,7 @@
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.274"
-        app:srcCompat="@drawable/markattendance" />
+        app:layout_constraintVertical_bias="0.274" />
 
     <ImageButton
         android:id="@+id/attnSumm"
@@ -31,8 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/markAttn"
-        app:srcCompat="@drawable/attendancesummary" />
+        app:layout_constraintTop_toBottomOf="@+id/markAttn" />
 
     <ImageButton
         android:id="@+id/toEmployer"
@@ -45,7 +43,11 @@
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+<<<<<<< Updated upstream
         app:layout_constraintVertical_bias="0.828"
         app:srcCompat="@drawable/toemployer" />
 
+=======
+        app:layout_constraintVertical_bias="0.828" />
+>>>>>>> Stashed changes
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">项目出勤跟踪器</string>
     <string name="attn_summ">出勤总结</string>
-    <string name="to_employer">雇主</string>
     <string name="home_page">主页</string>
     <string name="mark_attn">考勤</string>
     <string name="settings">设定值</string>
@@ -10,4 +8,6 @@
     <string name="logout">登出</string>
     <string name="attn_code">考勤代码</string>
     <string name="submit">提交</string>
+    <string name="loginTitle">登录系统</string>
+    <string name="login">登录</string>
 </resources>
