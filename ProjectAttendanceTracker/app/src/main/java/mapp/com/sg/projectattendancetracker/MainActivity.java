@@ -11,8 +11,6 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    public static final String[] FROM = (_ID);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.settings:
-                //Intent settingsIntent = new Intent(this, Settings.class);
+                Intent settingsIntent = new Intent(this, Settings.class);
                 startActivity(settingsIntent);
                 break;
         }
@@ -42,20 +40,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.markAttn:
-                Intent markAttnIntent = new Intent(this, MarkAttendanceActivity.class);
-                startActivity(markAttnIntent);
-                break;
-
-            case R.id.attnSumm:
-                Intent attnSumIntent = new Intent(this, AttendanceSummaryActivity.class);
-                startActivity(attnSumIntent);
-                break;
-
-            case R.id.toEmployer:
-                Intent toEmployerIntent = new Intent(this, ToEmployerActivity.class);
-                startActivity(toEmployerIntent);
-                break;
+            //case R.id.markAttn:
+                //Intent markAttnIntent = new Intent(this, MarkAttendanceActivity.class);
+                //startActivity(markAttnIntent);
+                //break;
         }
     }
 }
