@@ -11,6 +11,8 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
+    public static final String[] FROM = (_ID);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.settings:
-                Intent settingsIntent = new Intent(this, Settings.class);
+                //Intent settingsIntent = new Intent(this, Settings.class);
                 startActivity(settingsIntent);
                 break;
         }

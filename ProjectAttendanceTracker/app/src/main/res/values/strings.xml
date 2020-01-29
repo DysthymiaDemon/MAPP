@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Project Attendance Tracker</string>
+    <string name="app_name">Here I Am</string>
     <string name="home_page">Homepage</string>
     <string name="mark_attn">Mark Attendance</string>
     <string name="attn_summ">Attendance Summary</string>
