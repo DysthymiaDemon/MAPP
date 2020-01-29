@@ -19,19 +19,7 @@
         <activity android:name=".MainActivity"
             android:label="@string/home_page">
         </activity>
-        <activity android:name=".MarkAttendanceActivity"
-            android:label="@string/mark_attn">
-        </activity>
-        <activity android:name=".AttendanceSummaryActivity"
-            android:label="@string/attn_summ">
-        </activity>
-        <activity android:name=".ToEmployerActivity"
-            android:label="@string/to_employer">
-        </activity>
-        <activity android:name=".Settings"
-            android:label="@string/settings">
-        </activity>
-        
+
     </application>
 
 </manifest>
