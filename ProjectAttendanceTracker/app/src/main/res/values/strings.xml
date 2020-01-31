@@ -10,4 +10,16 @@
     <string name="attn_code">Attendance Code</string>
     <string name="loginTitle">Log into System</string>
     <string name="login">Login</string>
+    <string name="apply4leave">Apply for Leave</string>
+    <string name="reqOthers">Request Others</string>
+    <string name="repProblem">Report a Problem</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="month">Month</string>
+    <string name="attnRate">Attendance Rate</string>
+    <string name="leaves">Leaves</string>
+    <string name="annualLeaves">Annual Leaves</string>
+    <string name="MCs">Medical Certificates</string>
 </resources>

@@ -10,4 +10,16 @@
     <string name="submit">提交</string>
     <string name="loginTitle">登录系统</string>
     <string name="login">登录</string>
+    <string name="MCs">医疗证书</string>
+    <string name="annualLeaves">年假</string>
+    <string name="apply4leave">申请请假</string>
+    <string name="attnRate">出勤率</string>
+    <string name="leaves">休假</string>
+    <string name="month">月</string>
+    <string name="no">不想</string>
+    <string name="password">密码</string>
+    <string name="repProblem">告诉问题</string>
+    <string name="reqOthers">索要什么</string>
+    <string name="username">用户名</string>
+    <string name="yes">是</string>
 </resources>

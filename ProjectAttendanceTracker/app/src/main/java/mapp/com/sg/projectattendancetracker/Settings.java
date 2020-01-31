@@ -24,7 +24,7 @@ public class Settings extends AppCompatActivity implements View.OnClickListener{
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_attnSumm, menu);
         return true;
     }
 

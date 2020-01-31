@@ -7,11 +7,12 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/loginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/buttonLogin"
+        android:layout_width="177dp"
+        android:layout_height="48dp"
         android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="502dp" />
+        tools:layout_editor_absoluteY="586dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

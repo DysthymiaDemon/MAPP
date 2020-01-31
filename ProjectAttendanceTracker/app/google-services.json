@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "890364647865",
+    "firebase_url": "https://patracker-a3190.firebaseio.com",
+    "project_id": "patracker-a3190",
+    "storage_bucket": "patracker-a3190.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:890364647865:android:205c63d082f252139a7e68",
+        "android_client_info": {
+          "package_name": "mapp.com.sg.projectattendancetracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "890364647865-qtiverbd8jkggnbaivfpt8veqdc0gjk8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD8G55OQU6IzDPCUw6dZGjMsVpamRm-0M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "890364647865-qtiverbd8jkggnbaivfpt8veqdc0gjk8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
