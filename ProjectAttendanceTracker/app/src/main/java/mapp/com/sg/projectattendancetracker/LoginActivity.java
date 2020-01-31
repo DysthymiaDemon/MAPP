@@ -29,8 +29,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
-        emailTextbox = (EditText) findViewById(R.id.);
-        passwordTextbox = (EditText) findViewById(R.id.);
+        emailTextbox = (EditText) findViewById(R.id.emailTextbox);
+        passwordTextbox = (EditText) findViewById(R.id.passwordTextbox);
         buttonLogin.setOnClickListener(this);
     }
 
@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public boolean onCreateOptionsMenu(Menu menu){
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_attnsumm, menu);
+        //inflater.inflate(R.menu.menu_attnsumm, menu);
         return true;
     }
 

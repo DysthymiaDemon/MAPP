@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="attn_summ">出勤总结</string>
-    <string name="home_page">主页</string>
     <string name="mark_attn">考勤</string>
     <string name="settings">设定值</string>
     <string name="payslip">查看工资单</string>
