@@ -21,4 +21,6 @@
     <string name="leaves">Leaves</string>
     <string name="annualLeaves">Annual Leaves</string>
     <string name="MCs">Medical Certificates</string>
+    <string name="email">Email</string>
+    <string name="pinNumber">Pin Number</string>
 </resources>
