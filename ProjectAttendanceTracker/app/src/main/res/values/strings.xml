@@ -23,4 +23,5 @@
     <string name="MCs">Medical Certificates</string>
     <string name="email">Email</string>
     <string name="pinNumber">Pin Number</string>
+    <string name="loginActivityPrompt">Login to Attendance Tracker</string>
 </resources>

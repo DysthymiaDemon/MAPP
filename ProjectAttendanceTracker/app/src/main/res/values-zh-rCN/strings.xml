@@ -23,4 +23,5 @@
     <string name="yes">是</string>
     <string name="email">电子邮件</string>
     <string name="pinNumber">密码</string>
+    <string name="loginActivityPrompt">登录到出勤跟踪器</string>
 </resources>
