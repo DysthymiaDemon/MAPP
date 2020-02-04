@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -22,8 +24,8 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
 
     //init db
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private Task<QuerySnapshot> query;
-    private QuerySnapshot querySnapshot;
+    private Query query;
+    private DocumentReference profileDocument;
 
 
     @Override
@@ -40,7 +42,8 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             username = getSharedPreferences("user_name");
         }
 
-        dbQueryProfile(email);
+        profileDocument = dbGetProfileDocument(username);
+        //profileDocument
     }
 
     @Override
@@ -55,21 +58,10 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         return username;
     }
 
-    public void dbQueryProfile(String email){
-        query = db
-                .collection("users").document(username)
-                .collection("profile").whereEqualTo("email", email)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            querySnapshot = task.getResult();
-                        }else{
-                            querySnapshot = null;
-                        }
-                    }
-                });
+    private DocumentSnapshot dbGetProfileDocument(String username) {
+        DocumentSnapshot snapshot;
+        DocumentReference docRef = db.collection("users").document(username)
+                .collection("profile").document();
     }
 
     public void setSharedPreferences(String key, String username){
