@@ -24,4 +24,6 @@
     <string name="email">Email</string>
     <string name="pinNumber">Pin Number</string>
     <string name="loginActivityPrompt">Login to Attendance Tracker</string>
+    <string name="notifications">Notifications</string>
+    <string name="darkTheme">Dark Theme</string>
 </resources>

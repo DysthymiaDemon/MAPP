@@ -2,12 +2,20 @@ package mapp.com.sg.projectattendancetracker;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import mapp.com.sg.projectattendancetracker.model.dbCurrMonth;
 import mapp.com.sg.projectattendancetracker.model.dbProfile;
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -18,7 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AttnSummActivity extends AppCompatActivity implements View.OnClickListener {
+public class AttnSummActivity extends AppCompatActivity implements View.OnClickListener{
 
     private String email;
     private String username;
@@ -31,6 +39,13 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     //init db
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    @Override
+    public void onCreate(Bundle saveInstanceState){
+        super.onCreate(saveInstanceState);
+        setContentView(R.layout.activity_attnsumm);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+    }
 
     @Override
     public void onStart(){
@@ -50,12 +65,38 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
-    public void onClick(View v) {
+    public boolean onCreateOptionsMenu(Menu menu){
+        super.onCreateOptionsMenu(menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_attnsumm, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        //switch (item.getItemId()){
+            //case R.id.settings:
+            //Intent settingsIntent = new Intent(this, Settings.class);
+            //startActivity(settingsIntent);
+            //break;
+        //}
+
+        return false;
+    }
+
+    @Override
+    public void onClick(View view){
+        switch (view.getId()){
+            //use as reference
+            //case R.id.markAttn:
+            //Intent markAttnIntent = new Intent(this, MarkAttendanceActivity.class);
+            //startActivity(markAttnIntent);
+            //break;
+        }
     }
 
 
-    //callable methods
+    //general callable methods
 //--------------------------------------------------------------------------------------------------
     public String getUsername(String email){
         String arr[] = email.split("@",2);
@@ -64,6 +105,13 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         return username;
     }
 
+    public void setAppBar(){
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getResources().getText(R.string.attn_summ));
+    }
+
+    //db and related callable methods
+//--------------------------------------------------------------------------------------------------
     public void dbSetProfile(String username) {
         DocumentReference docRef = db.collection("users").document(username)
                 .collection("profile").document();
@@ -99,4 +147,6 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         String keyValue = preferences.getString(key,"");
         return keyValue;
     }
+//--------------------------------------------------------------------------------------------------
+
 }

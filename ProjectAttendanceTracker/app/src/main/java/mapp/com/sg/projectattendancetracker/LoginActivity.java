@@ -80,10 +80,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (TextUtils.isEmpty(email)){
             Toast.makeText(this,"Please enter your username", Toast.LENGTH_SHORT).show();
-            return;
+
         } else if (TextUtils.isEmpty(password)){
             Toast.makeText(this, "Please enter your password", Toast.LENGTH_SHORT).show();
-            return;
+
         } else {
             progressDialog.setMessage("Logging in...");
             progressDialog.show();
@@ -103,35 +103,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        super.onCreateOptionsMenu(menu);
-        MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.menu_attnsumm, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            //to complete
-            //case R.id.settings:
-                //Intent settingsIntent = new Intent(this, Settings.class);
-                //startActivity(settingsIntent);
-                //break;
-        }
-
-    return false;
-    }
 
     @Override
     public void onClick(View view){
-        switch (view.getId()){
-            //use as reference
-            //case R.id.markAttn:
-                //Intent markAttnIntent = new Intent(this, MarkAttendanceActivity.class);
-                //startActivity(markAttnIntent);
-                //break;
-        }
+
     }
 }
