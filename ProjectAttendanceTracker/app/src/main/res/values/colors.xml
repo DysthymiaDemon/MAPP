@@ -3,4 +3,11 @@
     <color name="colorPrimary">#00A6FF</color>
     <color name="colorPrimaryDark">#0000A7</color>
     <color name="colorAccent">#888888</color>
+
+    <color name="Black_Black">#000000</color>
+    <color name="Black_MarvelApp_Black">#343F4B</color>
+    <color name="Grey_MarvelApp_Grey">#5A6978</color>
+    <color name="lightGreyMarvelApp">#969FAA</color>
+    <color name="superLightGreyMarvelApp">#C0CCDA</color>
+    <color name="textColorWhite">#FFFFFF</color>
 </resources>

@@ -2,24 +2,32 @@ package mapp.com.sg.projectattendancetracker;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import mapp.com.sg.projectattendancetracker.model.dbCurrMonth;
+import mapp.com.sg.projectattendancetracker.model.dbPastAttn;
 import mapp.com.sg.projectattendancetracker.model.dbProfile;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -31,13 +39,25 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     private String email;
     private String username;
     private int monthNumber;
+    private ImageView profileImg;
+
+    //init SharedPreferences
     private SharedPreferences preferences;
     public static final String MYPREFERENCES = "myPrefs";
     public static final String UsernameKey = "user_name";
     public static final String EmailKey = "email_id";
 
-    //init db
+    //init firestore db and storage
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef = storage.getReference();
+
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+    }
 
     @Override
     public void onCreate(Bundle saveInstanceState){
@@ -45,11 +65,8 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_attnsumm);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-    }
 
-    @Override
-    public void onStart(){
-        super.onStart();
+        //get email, convert to username
         if(getIntent().getStringExtra("EMAIL_ID") != null){
             email = getIntent().getStringExtra("EMAIL_ID");
             username = getUsername(email);
@@ -60,9 +77,16 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             email = getSharedPreferences(EmailKey);
             username = getSharedPreferences(UsernameKey);
         }
-        dbSetProfile(username);
-        dbSetCurrMonthAttn(username);
+
+        //get profile and attn db of user
+        dbGetCurrProfile(username);
+        dbGetCurrMonthAttn(username);
+        dbGetPastAttn(username);
+
+        //get profileImage
+        profileImg = getProfileImage(username);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
@@ -110,9 +134,9 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         actionBar.setTitle(getResources().getText(R.string.attn_summ));
     }
 
-    //db and related callable methods
+    //db-to-model callable methods
 //--------------------------------------------------------------------------------------------------
-    public void dbSetProfile(String username) {
+    public void dbGetCurrProfile(String username) {
         DocumentReference docRef = db.collection("users").document(username)
                 .collection("profile").document();
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -123,18 +147,26 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         });
     }
 
-    public void dbSetCurrMonthAttn(String username){
+    public void dbGetCurrMonthAttn(String username){
         int monthAsInt = Calendar.getInstance().get(Calendar.MONTH);
         DocumentReference documentReference = db.collection("users").document(username)
                 .collection("currMonthAttn").document(Integer.toString(monthAsInt));
-        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+    }
+
+    public void dbGetPastAttn(String username){
+        DocumentReference docRef = db.collection("users").document(username)
+                .collection("attendance").document();
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                dbCurrMonth currMonth = documentSnapshot.toObject(dbCurrMonth.class);
+                dbPastAttn pastAttn = documentSnapshot.toObject(dbPastAttn.class);
             }
         });
     }
 
+    //SharedPreferences callable methods
+//--------------------------------------------------------------------------------------------------
     public void setSharedPreferences(String key, String username){
         preferences = getSharedPreferences(MYPREFERENCES, 0);
         SharedPreferences.Editor editor = preferences.edit();
@@ -147,6 +179,26 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         String keyValue = preferences.getString(key,"");
         return keyValue;
     }
-//--------------------------------------------------------------------------------------------------
 
+    //ImageView callable methods
+//--------------------------------------------------------------------------------------------------
+    public ImageView getProfileImage(String username){
+        StorageReference profileImgRef = storageRef.child("profileImages/"+username+".jpg");
+        final ImageView profileImage = new ImageView(this);
+        final long ONE_MEGABYTE = 1024 * 1024;
+        profileImgRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                profileImage.setImageBitmap(bmp);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception ex) {
+                Log.d("profileImageEx", "exception", ex);
+            }
+        });
+
+        return profileImage;
+    }
 }

@@ -1,12 +1,12 @@
 package mapp.com.sg.projectattendancetracker.model;
 
-public class dbPastAttendance {
+public class dbPastAttn {
     private int leaveCount;
     private int attendanceRate;
 
-    public dbPastAttendance(){}
+    public dbPastAttn(){}
 
-    public dbPastAttendance(int leaveCount, int attendanceRate) {
+    public dbPastAttn(int leaveCount, int attendanceRate) {
         this.leaveCount = leaveCount;
         this.attendanceRate = attendanceRate;
     }
