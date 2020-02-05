@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,7 +51,8 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     public static final String EmailKey = "email_id";
 
     //init firestore db and storage
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference dbColl = db.collection("ronnietan");
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
 
@@ -173,7 +175,10 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void dbGetPastAttn(String username){
-        DateFormat dateFormat = new SimpleDateFormat("MM");
+        //wrong code. it isnt current month its past months.
+        //CollectionReference most likely needed
+
+        /*DateFormat dateFormat = new SimpleDateFormat("MM");
         Date date = new Date();
         Log.d("Month",dateFormat.format(date));
 
@@ -191,7 +196,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
                     public void onFailure(@NonNull Exception e) {
                         Log.d("Exception", "dbGetCurrMonthAttn failed", e);
                     }
-                });
+                });*/
     }
 
     //SharedPreferences callable methods
