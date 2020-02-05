@@ -27,6 +27,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -139,38 +140,58 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     //db-to-model callable methods
 //--------------------------------------------------------------------------------------------------
     public void dbGetCurrProfile(String username) {
-        db.collection("users").document(username)
-                .collection("profile").document(username)
+        db.collection(username).document("profile")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        dbProfile profile = documentSnapshot.toObject(dbProfile.class);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                dbProfile profile = documentSnapshot.toObject(dbProfile.class);
+            public void onFailure(@NonNull Exception e) {
+                Log.d("Exception", "dbGetCurrProfile failed", e);
             }
         });
     }
 
     public void dbGetCurrMonthAttn(String username){
-        int monthAsInt = Calendar.getInstance().get(Calendar.MONTH);
-        DocumentReference documentReference = db.collection("users").document(username)
-                .collection("currMonthAttn").document(Integer.toString(monthAsInt));
-        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                dbCurrMonth currMonth = documentSnapshot.toObject(dbCurrMonth.class);
-            }
-        });
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        int dayDate = calendar.get(Calendar.DAY_OF_WEEK);
+        String docPath = dayDate+"Attn";
+
+        db.collection(username).document(docPath)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                    }
+                });
     }
 
     public void dbGetPastAttn(String username){
-        DocumentReference docRef = db.collection("users").document(username)
-                .collection("attendance").document();
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                dbPastAttn pastAttn = documentSnapshot.toObject(dbPastAttn.class);
-            }
-        });
+        DateFormat dateFormat = new SimpleDateFormat("MM");
+        Date date = new Date();
+        Log.d("Month",dateFormat.format(date));
+
+        String docPath = dateFormat.format(date) + "Attn";
+        db.collection(username).document(docPath)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        dbPastAttn pastAttn = documentSnapshot.toObject(dbPastAttn.class);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("Exception", "dbGetCurrMonthAttn failed", e);
+                    }
+                });
     }
 
     //SharedPreferences callable methods

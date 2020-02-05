@@ -6,9 +6,7 @@ import java.sql.Timestamp;
 
 public class dbProfile {
     private Timestamp birthDate;
-    private int childcareLeave;
     private String email;
-    private int emergencyLeave;
     private String firstName;
     private String jobAddress;
     private Location jobLatLong;
@@ -17,16 +15,13 @@ public class dbProfile {
     private String lastName;
     private int maxAnnual;
     private int mcPerMonth;
-    private int parentalLeave;
     private int salaryTier;
 
     public dbProfile(){}
 
-    public dbProfile(Timestamp birthDate, int childcareLeave, String email, int emergencyLeave, String firstName, String jobAddress, Location jobLatLong, String jobPlaceName, String jobTitle, String lastName, int maxAnnual, int mcPerMonth, int parentalLeave, int salaryTier) {
+    public dbProfile(Timestamp birthDate, String email, String firstName, String jobAddress, Location jobLatLong, String jobPlaceName, String jobTitle, String lastName, int maxAnnual, int mcPerMonth, int salaryTier) {
         this.birthDate = birthDate;
-        this.childcareLeave = childcareLeave;
         this.email = email;
-        this.emergencyLeave = emergencyLeave;
         this.firstName = firstName;
         this.jobAddress = jobAddress;
         this.jobLatLong = jobLatLong;
@@ -35,25 +30,17 @@ public class dbProfile {
         this.lastName = lastName;
         this.maxAnnual = maxAnnual;
         this.mcPerMonth = mcPerMonth;
-        this.parentalLeave = parentalLeave;
         this.salaryTier = salaryTier;
     }
+
 
     //get methods
     public Timestamp getBirthDate() {
         return birthDate;
     }
 
-    public int getChildcareleave() {
-        return childcareLeave;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public int getEmergencyLeave() {
-        return emergencyLeave;
     }
 
     public String getFirstName() {
@@ -88,29 +75,18 @@ public class dbProfile {
         return mcPerMonth;
     }
 
-    public int getParentalLeave() {
-        return parentalLeave;
-    }
-
     public int getSalaryTier() {
         return salaryTier;
     }
+
 
     //set methods
     public void setBirthDate(Timestamp birthDate) {
         this.birthDate = birthDate;
     }
 
-    public void setChildcareleave(int childcareLeave) {
-        this.childcareLeave = childcareLeave;
-    }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public void setEmergencyLeave(int emergencyLeave) {
-        this.emergencyLeave = emergencyLeave;
     }
 
     public void setFirstName(String firstName) {
@@ -143,10 +119,6 @@ public class dbProfile {
 
     public void setMcPerMonth(int mcPerMonth) {
         this.mcPerMonth = mcPerMonth;
-    }
-
-    public void setParentalLeave(int parentalLeave) {
-        this.parentalLeave = parentalLeave;
     }
 
     public void setSalaryTier(int salaryTier) {
