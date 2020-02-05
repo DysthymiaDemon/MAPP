@@ -19,6 +19,9 @@
         <activity android:name=".LoginActivity"
             android:label="@string/loginTitle">
         </activity>
+        <activity android:name=".AttnSummActivity"
+            android:label="@string/attn_summ">
+        </activity>
     </application>
 
 </manifest>

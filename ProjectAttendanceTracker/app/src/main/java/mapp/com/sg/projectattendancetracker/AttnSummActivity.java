@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -39,7 +40,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     private String email;
     private String username;
     private int monthNumber;
-    private ImageView profileImg;
+    private Bitmap profileImgBmp;
 
     //init SharedPreferences
     private SharedPreferences preferences;
@@ -84,7 +85,8 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         dbGetPastAttn(username);
 
         //get profileImage
-        profileImg = getProfileImage(username);
+        profileImgBmp = getProfileImage(username);
+
     }
 
 
@@ -137,9 +139,10 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     //db-to-model callable methods
 //--------------------------------------------------------------------------------------------------
     public void dbGetCurrProfile(String username) {
-        DocumentReference docRef = db.collection("users").document(username)
-                .collection("profile").document();
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        db.collection("users").document(username)
+                .collection("profile").document(username)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 dbProfile profile = documentSnapshot.toObject(dbProfile.class);
@@ -151,7 +154,12 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         int monthAsInt = Calendar.getInstance().get(Calendar.MONTH);
         DocumentReference documentReference = db.collection("users").document(username)
                 .collection("currMonthAttn").document(Integer.toString(monthAsInt));
-
+        documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                dbCurrMonth currMonth = documentSnapshot.toObject(dbCurrMonth.class);
+            }
+        });
     }
 
     public void dbGetPastAttn(String username){
@@ -182,15 +190,16 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
 
     //ImageView callable methods
 //--------------------------------------------------------------------------------------------------
-    public ImageView getProfileImage(String username){
+    public Bitmap getProfileImage(String username){
         StorageReference profileImgRef = storageRef.child("profileImages/"+username+".jpg");
-        final ImageView profileImage = new ImageView(this);
+        //final ImageView profileImage = new ImageView(this);
+        final Bitmap[] bmp = new Bitmap[1];
         final long ONE_MEGABYTE = 1024 * 1024;
         profileImgRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
-                profileImage.setImageBitmap(bmp);
+                bmp[0] = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                //profileImage.setImageBitmap(bmp[0]);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -199,6 +208,12 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        return profileImage;
+        return bmp[0];
+    }
+
+    public void loadImageToUi(Bitmap profileImageBmp){
+        ImageView defaultImage = (ImageView) findViewById(R.id.profileImageView);
+        defaultImage.setImageBitmap(profileImageBmp);
+
     }
 }
