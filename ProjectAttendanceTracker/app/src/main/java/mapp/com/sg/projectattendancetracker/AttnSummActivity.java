@@ -1,10 +1,11 @@
 package mapp.com.sg.projectattendancetracker;
 
-import android.content.Intent;
+import android.content.ContentValues;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,10 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import mapp.com.sg.projectattendancetracker.model.dbCurrMonth;
-import mapp.com.sg.projectattendancetracker.model.dbPastAttn;
-import mapp.com.sg.projectattendancetracker.model.dbProfile;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,18 +21,20 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import mapp.com.sg.projectattendancetracker.model.Profiledata;
+
+import static android.provider.BaseColumns._ID;
+import static mapp.com.sg.projectattendancetracker.Constants.BIRTHDATE;
+import static mapp.com.sg.projectattendancetracker.Constants.EMAIL;
+import static mapp.com.sg.projectattendancetracker.Constants.JOB;
+import static mapp.com.sg.projectattendancetracker.Constants.MAXANNUAL;
+import static mapp.com.sg.projectattendancetracker.Constants.NAME;
+import static mapp.com.sg.projectattendancetracker.Constants.SALARYTIER;
+import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME;
+import static mapp.com.sg.projectattendancetracker.Constants.WORKPLACE;
 
 public class AttnSummActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -50,9 +49,11 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     public static final String UsernameKey = "user_name";
     public static final String EmailKey = "email_id";
 
-    //init firestore db and storage
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference dbColl = db.collection("ronnietan");
+    //init SQLite
+    private static String[] FROM = {_ID,BIRTHDATE,EMAIL,NAME,JOB,WORKPLACE,MAXANNUAL,SALARYTIER};
+    private Profiledata profile;
+
+    //init firestore storage
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
 
@@ -82,13 +83,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             username = getSharedPreferences(UsernameKey);
         }
 
-        //get profile and attn db of user
-        dbGetCurrProfile(username);
-        dbGetCurrMonthAttn(username);
-        dbGetPastAttn(username);
 
-        //get profileImage
-        profileImgBmp = getProfileImage(username);
 
     }
 
@@ -141,62 +136,20 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
 
     //db-to-model callable methods
 //--------------------------------------------------------------------------------------------------
-    public void dbGetCurrProfile(String username) {
-        db.collection(username).document("profile")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        dbProfile profile = documentSnapshot.toObject(dbProfile.class);
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d("Exception", "dbGetCurrProfile failed", e);
-            }
-        });
+    private void addProfile(String email, String username){
+        SQLiteDatabase db = profile.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(BIRTHDATE, "12/08/1962");
+        values.put(EMAIL, email);
+        values.put(NAME, username);
+        values.put(JOB, "Security Guard");
+        values.put(WORKPLACE, "Singapore Polytechnic");
+        values.put(MAXANNUAL,12);
+        values.put(SALARYTIER,2);
+        db.insertOrThrow(TABLE_NAME,null, values);
     }
-
-    public void dbGetCurrMonthAttn(String username){
-        Date now = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(now);
-        int dayDate = calendar.get(Calendar.DAY_OF_WEEK);
-        String docPath = dayDate+"Attn";
-
-        db.collection(username).document(docPath)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                    }
-                });
-    }
-
-    public void dbGetPastAttn(String username){
-        //wrong code. it isnt current month its past months.
-        //CollectionReference most likely needed
-
-        /*DateFormat dateFormat = new SimpleDateFormat("MM");
-        Date date = new Date();
-        Log.d("Month",dateFormat.format(date));
-
-        String docPath = dateFormat.format(date) + "Attn";
-        db.collection(username).document(docPath)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        dbPastAttn pastAttn = documentSnapshot.toObject(dbPastAttn.class);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d("Exception", "dbGetCurrMonthAttn failed", e);
-                    }
-                });*/
+    private Cursor getProfile(){
+        SQLiteDatabase db = profile.getReadableDatabase();
     }
 
     //SharedPreferences callable methods
