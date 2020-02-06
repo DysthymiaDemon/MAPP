@@ -17,10 +17,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity"
-            android:label="@string/loginTitle">
+            android:label="@string/loginTitle"
+            android:noHistory = "true">
         </activity>
         <activity android:name=".AttnSummActivity"
-            android:label="@string/attn_summ">
+            android:label="@string/attn_summ"
+            android:noHistory = "true">
         </activity>
     </application>
 

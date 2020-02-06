@@ -14,7 +14,7 @@ import static mapp.com.sg.projectattendancetracker.Constants.USERNAME;
 
 public class CurrAttnData extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "ronnietan.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     public CurrAttnData(Context ctx){
         super(ctx, DATABASE_NAME,null,DATABASE_VERSION);
@@ -22,10 +22,10 @@ public class CurrAttnData extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        db.execSQL("CREATE TABLE "+TABLE_NAME_CURRATTN+" ("+_ID
-        +" INTEGER PRIMARY KEY AUTOINCREMENT, "+USERNAME+" TEXT NOT NULL, "
-                +CLOCKIN+" TEXT NOT NULL, "+CLOCKOUT+
-                " TEXT NOT NULL, "+ATTNSTATUS+" TEXT, "+LEAVE+" TEXT);");
+        db.execSQL("CREATE TABLE "+TABLE_NAME_CURRATTN+"( "+_ID
+        +" INTEGER PRIMARY KEY AUTOINCREMENT, "+USERNAME+" TEXT, "
+                +CLOCKIN+" TEXT, "+CLOCKOUT+
+                " TEXT, "+ATTNSTATUS+" TEXT, "+LEAVE+" TEXT);");
     }
 
     @Override

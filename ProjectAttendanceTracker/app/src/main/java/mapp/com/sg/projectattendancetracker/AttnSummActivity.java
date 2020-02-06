@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -56,6 +57,8 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     private String username;
     private int monthNumber;
     private Bitmap profileImgBmp;
+    private ProfileData profile;
+    private CurrAttnData currattn;
 
     //init SharedPreferences
     public static SharedPreferences preferences;
@@ -65,29 +68,20 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
 
     //profile db prep
     private static String[] FROM_PROFILE = {_ID,BIRTHDATE,EMAIL,NAME,JOB,WORKPLACE,MAXANNUAL,SALARYTIER};
-    private ProfileData profile;
 
     //currAttn db prep
-    private static String[] FROM_CURRATTN = {_ID,CLOCKIN,CLOCKOUT,ATTNSTATUS};
-    private CurrAttnData currAttn;
+    private static String[] FROM_CURRATTN = {_ID,CLOCKIN,CLOCKOUT,ATTNSTATUS,LEAVE};
 
     //init firestore storage
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef = storage.getReference();
 
-
-    @Override
-    public void onStart(){
-        super.onStart();
-
-    }
-
     @Override
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_attnsumm);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        /*Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);*/
 
         //get email, convert to username
         if(getIntent().getStringExtra("EMAIL_ID") != null){
@@ -100,6 +94,8 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             email = getSharedPreferences(EmailKey);
             username = getSharedPreferences(UsernameKey);
         }
+        profile = new ProfileData(this);
+        currattn = new CurrAttnData(this);
 
         //profile image
         profileImgBmp = getProfileImage(username);
@@ -107,10 +103,11 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
 
         //profile db
         addProfile(email,username);
-        showProfile(getProfile());
+        //showProfile(getProfile());
 
         //currAttn db
-
+        addCurrAttn(username);
+        showCurrAttn(getCurrAttn());
 
 
     }
@@ -217,7 +214,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         /*SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy_hh:mm:ss", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());*/
 
-        SQLiteDatabase db = currAttn.getWritableDatabase();
+        SQLiteDatabase db = currattn.getWritableDatabase();
         ContentValues values1 = new ContentValues();
         values1.put(USERNAME, username);
         values1.put(CLOCKIN, "01/02/2020 07:13:21");
@@ -236,7 +233,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private Cursor getCurrAttn(){
-        SQLiteDatabase db = currAttn.getReadableDatabase();
+        SQLiteDatabase db = currattn.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_CURRATTN, FROM_CURRATTN,null,null,null,null,null);
         return cursor;
     }
@@ -249,14 +246,20 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         while(cursor.moveToNext()){
             if(cursor.getString(4) == "1"){
                 countPresent++;
-            } else if (cursor.getString(5) == "1"){
+            } else if (cursor.getString(5) != "1"){
                 countLeave++;
             } else{
                 MIA++;
             }
         }
 
-        //numbers to progressbar
+        Calendar c = Calendar.getInstance();
+        int monthMaxDays = c.getActualMaximum(Calendar.DAY_OF_MONTH);
+        ((ProgressBar) findViewById(R.id.attnRateProgressBar)).setMax(monthMaxDays);
+        ((ProgressBar) findViewById(R.id.attnRateProgressBar)).setProgress(countPresent);
+
+        ((ProgressBar) findViewById(R.id.leaveProgressBar)).setMax(3);
+        ((ProgressBar) findViewById(R.id.leaveProgressBar)).setProgress(countLeave);
     }
 
     //SharedPreferences callable methods

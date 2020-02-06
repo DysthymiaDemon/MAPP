@@ -6,8 +6,8 @@ import java.sql.Timestamp;
 
 public interface Constants extends BaseColumns{
     public static final String TABLE_NAME_PROFILE = "profile";
-    public static final String TABLE_NAME_CURRATTN = "currAttn";
-    public static final String TABLE_NAME_PASTATTN = "pastAttn";
+    public static final String TABLE_NAME_CURRATTN = "currattn";
+    public static final String TABLE_NAME_PASTATTN = "pastattn";
 
     // columns profile
     public static final String BIRTHDATE = "date";
