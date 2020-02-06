@@ -9,6 +9,7 @@ import static mapp.com.sg.projectattendancetracker.Constants.BIRTHDATE;
 import static mapp.com.sg.projectattendancetracker.Constants.EMAIL;
 import static mapp.com.sg.projectattendancetracker.Constants.JOB;
 import static mapp.com.sg.projectattendancetracker.Constants.MAXANNUAL;
+import static mapp.com.sg.projectattendancetracker.Constants.NAME;
 import static mapp.com.sg.projectattendancetracker.Constants.SALARYTIER;
 import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME;
 import static mapp.com.sg.projectattendancetracker.Constants.WORKPLACE;
@@ -24,9 +25,9 @@ public class Profiledata extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
         db.execSQL("CREATE TABLE "+TABLE_NAME+ "("+_ID
-        +"INTEGER PROMARY KEY AUTOINCREMENT,"+BIRTHDATE+
-                "TEXT,"+EMAIL+"TEXT NOT NULL,"+JOB+"TEXT NOT NULL,"+WORKPLACE+"TEXT NOT NULL,"+
-                MAXANNUAL+"INTEGER,"+SALARYTIER+"INTEGER);");
+        +" INTEGER PRIMARY KEY AUTOINCREMENT, "+BIRTHDATE+
+                " TEXT,"+EMAIL+" TEXT NOT NULL,"+NAME+"TEXT NOT NULL, "+JOB+" TEXT NOT NULL,"+WORKPLACE+" TEXT NOT NULL,"+
+                MAXANNUAL+" INTEGER, "+SALARYTIER+" INTEGER);");
     }
 
     @Override
