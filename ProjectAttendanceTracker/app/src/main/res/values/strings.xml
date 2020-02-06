@@ -26,4 +26,7 @@
     <string name="loginActivityPrompt">Login to Attendance Tracker</string>
     <string name="notifications">Notifications</string>
     <string name="darkTheme">Dark Theme</string>
+    <string name="userOptions">User Options</string>
+    <string name="navigationDrawerOpen">Open Navigation Drawer</string>
+    <string name="navigationDrawerClose">Close Navigation Drawer</string>
 </resources>

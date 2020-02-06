@@ -1,4 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/navAttnSumm"
+            android:icon="@drawable/ic_attn_summ"
+            android:title="@string/attn_summ" />
+        <item
+            android:id="@+id/navMarkAttn"
+            android:icon="@drawable/ic_mark_attn"
+            android:title="@string/mark_attn" />
+        <item
+            android:id="@+id/navApplyForLeave"
+            android:icon="@drawable/ic_apply_for_leave"
+            android:title="@string/apply4leave" />
+        <item
+            android:id="@+id/navReqOthers"
+            android:icon="@drawable/ic_request_others"
+            android:title="@string/reqOthers" />
+        <item
+            android:id="@+id/navRepProblem"
+            android:icon="@drawable/ic_report_problem"
+            android:title="@string/repProblem" />
+    </group>
+
+    <item android:title="@string/userOptions">
+        <menu>
+            <item
+                android:id="@+id/navSettings"
+                android:icon="@drawable/ic_setting"
+                android:title="@string/settings" />
+            <item
+                android:id="@+id/navLogout"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/logout" />
+        </menu>
+    </item>
 
 </menu>

@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,14 +17,21 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -48,11 +56,12 @@ import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_PROFILE;
 import static mapp.com.sg.projectattendancetracker.Constants.USERNAME;
 import static mapp.com.sg.projectattendancetracker.Constants.WORKPLACE;
 
-public class AttnSummActivity extends AppCompatActivity implements View.OnClickListener{
+public class AttnSummActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private String email;
     private String username;
     private DatabaseHelper databaseHelper;
+    private DrawerLayout drawerLayout;
 
     //init SharedPreferences
     public static SharedPreferences preferences;
@@ -71,8 +80,18 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     public void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_attnsumm);
-        /*Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);*/
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.navigationDrawerOpen, R.string.navigationDrawerClose);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         //get email, convert to username
         if(getIntent().getStringExtra("EMAIL_ID") != null){
@@ -108,8 +127,37 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         }else{
             showCurrAttn(getCurrAttn());
         }
+    }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item){
+        switch (item.getItemId()){
+            case R.id.navMarkAttn:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new markAttnFragment()).commit();
+                break;
+            case R.id.navApplyForLeave:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new apply4LeaveFragment()).commit();
+                break;
+            case R.id.navSettings:
+                Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.navLogout:
+                Toast.makeText(this,"logout", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
 
+    @Override
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else{
+            super.onBackPressed();
+        }
     }
 
 
@@ -281,6 +329,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         String keyValue = preferences.getString(key,"");
         return keyValue;
     }
+
 
     //ImageView callable methods
 //--------------------------------------------------------------------------------------------------

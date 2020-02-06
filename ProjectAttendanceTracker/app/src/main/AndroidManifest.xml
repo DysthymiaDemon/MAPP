@@ -21,6 +21,7 @@
             android:noHistory = "true">
         </activity>
         <activity android:name=".AttnSummActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/attn_summ"
             android:noHistory = "true">
         </activity>
