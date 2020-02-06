@@ -40,18 +40,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/avatars[11]" />
 
             <TextView
                 android:id="@+id/nameTextView"
-                android:layout_width="235dp"
-                android:layout_height="46dp"
+                android:layout_width="220dp"
+                android:layout_height="42dp"
                 android:layout_marginTop="4dp"
                 android:autoSizeTextType="uniform"
                 android:text="name here"
                 android:textColor="@color/textColorWhite"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.555"
                 app:layout_constraintStart_toEndOf="@+id/profileImageView"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,7 +60,7 @@
                 android:id="@+id/jobTitleTextView"
                 android:layout_width="182dp"
                 android:layout_height="29dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="20dp"
                 android:text="job title here"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/textColorWhite"
@@ -71,7 +72,7 @@
                 android:id="@+id/jobLocTextView"
                 android:layout_width="182dp"
                 android:layout_height="29dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="20dp"
                 android:text="job location here"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/textColorWhite"
@@ -82,12 +83,14 @@
                 android:id="@+id/salaryTierTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="20dp"
                 android:text="salary tier here"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/textColorWhite"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/profileImageView"
-                app:layout_constraintTop_toBottomOf="@+id/jobLocTextView" />
+                app:layout_constraintTop_toBottomOf="@+id/jobLocTextView"
+                app:layout_constraintVertical_bias="0.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -119,17 +122,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/attnRateLabelTextview" />
 
-    <TextView
-        android:id="@+id/leavesBarLabelTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/leaves"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/Black_MarvelApp_Black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/attnRateProgressBar" />
-
     <ProgressBar
         android:id="@+id/leaveProgressBar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -145,11 +137,22 @@
         app:layout_constraintTop_toBottomOf="@+id/leavesBarLabelTextView" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/leavesBarLabelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/leaves"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/Black_MarvelApp_Black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/attnRateProgressBar" />
+
+    <TextView
+        android:id="@+id/leavesNumTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="240dp"
-        android:layout_marginBottom="24dp"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/colorPrimaryDark"
@@ -163,7 +166,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="164dp"
-        android:layout_marginBottom="8dp"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/colorPrimaryDark"
