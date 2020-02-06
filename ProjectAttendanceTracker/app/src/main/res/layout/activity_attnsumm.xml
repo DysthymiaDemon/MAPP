@@ -27,28 +27,67 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/Black_MarvelApp_Black">
 
             <ImageView
                 android:id="@+id/profileImageView"
                 android:layout_width="141dp"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.058"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="5dp"
+                app:layout_constraintVertical_bias="0.0"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/firstNameTextView"
+                android:id="@+id/nameTextView"
                 android:layout_width="235dp"
                 android:layout_height="46dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="4dp"
                 android:autoSizeTextType="uniform"
-                android:text="@string/MCs"
-                android:textColor="@color/Black_MarvelApp_Black"
+                android:text="name here"
+                android:textColor="@color/textColorWhite"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/profileImageView"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/jobTitleTextView"
+                android:layout_width="182dp"
+                android:layout_height="29dp"
+                android:layout_marginStart="16dp"
+                android:text="job title here"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/textColorWhite"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/profileImageView"
+                app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+
+            <TextView
+                android:id="@+id/jobLocTextView"
+                android:layout_width="182dp"
+                android:layout_height="29dp"
+                android:layout_marginStart="16dp"
+                android:text="job location here"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/textColorWhite"
+                app:layout_constraintStart_toEndOf="@+id/profileImageView"
+                app:layout_constraintTop_toBottomOf="@+id/jobTitleTextView" />
+
+            <TextView
+                android:id="@+id/salaryTierTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:text="salary tier here"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/textColorWhite"
+                app:layout_constraintStart_toEndOf="@+id/profileImageView"
+                app:layout_constraintTop_toBottomOf="@+id/jobLocTextView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -63,6 +102,6 @@
         android:textColor="@color/Black_MarvelApp_Black"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="246dp" />
+        tools:layout_editor_absoluteY="266dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
