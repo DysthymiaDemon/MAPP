@@ -52,7 +52,6 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
 
     private String email;
     private String username;
-    private Bitmap bmpOut;
     private DatabaseHelper databaseHelper;
 
     //init SharedPreferences
@@ -90,10 +89,10 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         databaseHelper = new DatabaseHelper(this);
 
         //profile image
-        loadProfileImg(username);
+        //loadProfileImg(username);
 
         //profile db
-        if(getSharedPreferences(loadDbProfileKey) == null){
+        if(getSharedPreferences(loadDbProfileKey) != "1"){
             addProfile(email,username);
             setSharedPreferences(loadDbProfileKey,"1");
             showProfile(getProfile());
@@ -102,7 +101,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         }
 
         //currAttn db
-        if(getSharedPreferences(loadDbCurrAttnKey) == null){
+        if(getSharedPreferences(loadDbCurrAttnKey) != "1"){
             addCurrAttn(username);
             setSharedPreferences(loadDbCurrAttnKey, "1");
             showCurrAttn(getCurrAttn());
@@ -212,23 +211,28 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     private void addCurrAttn(String username){
         /*SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy_hh:mm:ss", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());*/
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME_CURRATTN, FROM_CURRATTN,null,null,null,null,null);
+        if(cursor.getCount() < 2){
+            db = databaseHelper.getWritableDatabase();
+            ContentValues values1 = new ContentValues();
+            values1.put(USERNAME, username);
+            values1.put(CLOCKIN, "01/02/2020 07:13:21");
+            values1.put(CLOCKOUT, "01/02/2020 18:10:31");
+            values1.put(ATTNSTATUS, "1");
+            values1.put(LEAVE, "1");
+            db.insertOrThrow(TABLE_NAME_CURRATTN,null, values1);
 
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        ContentValues values1 = new ContentValues();
-        values1.put(USERNAME, username);
-        values1.put(CLOCKIN, "01/02/2020 07:13:21");
-        values1.put(CLOCKOUT, "01/02/2020 18:10:31");
-        values1.put(ATTNSTATUS, "1");
-        values1.put(LEAVE, "1");
-        db.insertOrThrow(TABLE_NAME_CURRATTN,null, values1);
-
-        ContentValues values2 = new ContentValues();
-        values2.put(USERNAME, username);
-        values2.put(CLOCKIN, "02/02/2020 07:01:56");
-        values2.put(CLOCKOUT, "02/02/2020 18:00:06");
-        values2.put(ATTNSTATUS, "1");
-        values2.put(LEAVE, "1");
-        db.insertOrThrow(TABLE_NAME_CURRATTN,null, values2);
+            ContentValues values2 = new ContentValues();
+            values2.put(USERNAME, username);
+            values2.put(CLOCKIN, "02/02/2020 07:01:56");
+            values2.put(CLOCKOUT, "02/02/2020 18:00:06");
+            values2.put(ATTNSTATUS, "1");
+            values2.put(LEAVE, "1");
+            db.insertOrThrow(TABLE_NAME_CURRATTN,null, values2);
+        } else{
+            return;
+        }
     }
 
     private Cursor getCurrAttn(){
@@ -280,15 +284,16 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
 
     //ImageView callable methods
 //--------------------------------------------------------------------------------------------------
-    public void loadProfileImg(String username){
-        StorageReference storageRef = FirebaseStorage.getInstance().getReference("profile/"+username+".jpeg");
+    /*public void loadProfileImg(String username){
+        StorageReference storageRef = FirebaseStorage.getInstance().getReference();
+        StorageReference picRef = storageRef.child("profile/"+username+".jpg");
 
         ImageView imageView = findViewById(R.id.profileImageView);
 
         Glide.with(this)
-                .load(storageRef)
+                .load(picRef)
                 .into(imageView);
 
         System.out.println("loadProfileImg done");
-    }
+    }*/
 }
