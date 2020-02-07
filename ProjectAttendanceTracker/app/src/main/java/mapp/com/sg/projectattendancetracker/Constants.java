@@ -8,6 +8,7 @@ public interface Constants extends BaseColumns{
     public static final String TABLE_NAME_PROFILE = "profile";
     public static final String TABLE_NAME_CURRATTN = "currattn";
     public static final String TABLE_NAME_PASTATTN = "pastattn";
+    public static final String TABLE_NAME_APPLYLEAVE = "applyleave";
 
     // columns profile
     public static final String BIRTHDATE = "date";
@@ -24,5 +25,17 @@ public interface Constants extends BaseColumns{
     public static final String CLOCKOUT = "clockout";
     public static final String ATTNSTATUS = "attnstatus";
     public static final String LEAVE = "leave";
+
+    //columns pastAttn
+//    public static final String USERNAME = "name";
+    public static final String ATTNRATE = "attnrate";
+    public static final String LEAVES = "leaves";
+
+    //columns applyforleave
+//    public static final String USERNAME = "name";
+    public static final String TYPE = "type";
+    public static final String START = "start";
+    public static final String END = "end";
+    public static final String DETAILS = "details";
 
 }
