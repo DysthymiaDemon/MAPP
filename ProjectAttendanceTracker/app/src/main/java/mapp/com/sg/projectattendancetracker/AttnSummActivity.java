@@ -140,7 +140,6 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new apply4LeaveFragment()).commit();
                 break;
-            //more cases
             case R.id.navSettings:
                 Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
                 break;
