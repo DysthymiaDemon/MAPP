@@ -11,18 +11,30 @@
         android:layout_height="37dp"
 
         android:layout_marginTop="128dp"
+        android:backgroundTint="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/leaveTypeLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/typeOfLeave"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/Black_MarvelApp_Black"
         tools:layout_editor_absoluteX="51dp"
         tools:layout_editor_absoluteY="104dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="150dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="date"
+        android:text="@string/startDate"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="206dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
