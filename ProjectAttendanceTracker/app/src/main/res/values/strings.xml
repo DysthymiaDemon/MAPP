@@ -29,4 +29,14 @@
     <string name="userOptions">User Options</string>
     <string name="navigationDrawerOpen">Open Navigation Drawer</string>
     <string name="navigationDrawerClose">Close Navigation Drawer</string>
+    <string name="childcareLeave">Childcare Leave</string>
+    <string name="medicalLeave">Medical Leave</string>
+    
+    <string-array name="leaveTypeArray">
+        <item>Childcare Leave</item>
+        <item>Medical Leave</item>
+        <item>Paternity Leave</item>
+        <item>Annual Leave</item>
+        <item>Emergency Leave</item>
+    </string-array>
 </resources>

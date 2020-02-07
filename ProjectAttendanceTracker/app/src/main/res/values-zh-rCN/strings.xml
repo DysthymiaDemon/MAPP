@@ -24,4 +24,9 @@
     <string name="email">电子邮件</string>
     <string name="pinNumber">密码</string>
     <string name="loginActivityPrompt">登录到出勤跟踪器</string>
+    <string name="navigationDrawerClose">关闭导航抽屉</string>
+    <string name="navigationDrawerOpen">打开导航抽屉</string>
+    <string name="notifications">通知事项</string>
+    <string name="userOptions">用户选项</string>
+    <string name="darkTheme">黑暗主题</string>
 </resources>
