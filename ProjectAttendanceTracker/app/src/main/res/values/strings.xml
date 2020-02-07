@@ -29,14 +29,21 @@
     <string name="userOptions">User Options</string>
     <string name="navigationDrawerOpen">Open Navigation Drawer</string>
     <string name="navigationDrawerClose">Close Navigation Drawer</string>
+    <string name="typeOfLeave">Type of Leave</string>
     <string name="childcareLeave">Childcare Leave</string>
     <string name="medicalLeave">Medical Leave</string>
+    <string name="paternityLeave">Parental Leave</string>
+    <string name="annualLeave">Annual Leave</string>
+    <string name="emergencyLeave">Emergency Leave</string>
+    <string name="startDate">Start Date</string>
+    <string name="endDate">End Date</string>
+    <string name="details">Details</string>
     
     <string-array name="leaveTypeArray">
-        <item>Childcare Leave</item>
-        <item>Medical Leave</item>
-        <item>Paternity Leave</item>
-        <item>Annual Leave</item>
-        <item>Emergency Leave</item>
+        <item>@string/childcareLeave</item>
+        <item>@string/medicalLeave</item>
+        <item>@string/paternityLeave</item>
+        <item>@string/annualLeave</item>
+        <item>@string/emergencyLeave</item>
     </string-array>
 </resources>
