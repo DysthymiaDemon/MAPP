@@ -33,14 +33,19 @@ import static mapp.com.sg.projectattendancetracker.Constants.ATTNSTATUS;
 import static mapp.com.sg.projectattendancetracker.Constants.BIRTHDATE;
 import static mapp.com.sg.projectattendancetracker.Constants.CLOCKIN;
 import static mapp.com.sg.projectattendancetracker.Constants.CLOCKOUT;
+import static mapp.com.sg.projectattendancetracker.Constants.DETAILS;
 import static mapp.com.sg.projectattendancetracker.Constants.EMAIL;
+import static mapp.com.sg.projectattendancetracker.Constants.END;
 import static mapp.com.sg.projectattendancetracker.Constants.JOB;
 import static mapp.com.sg.projectattendancetracker.Constants.LEAVE;
 import static mapp.com.sg.projectattendancetracker.Constants.MAXANNUAL;
 import static mapp.com.sg.projectattendancetracker.Constants.NAME;
 import static mapp.com.sg.projectattendancetracker.Constants.SALARYTIER;
+import static mapp.com.sg.projectattendancetracker.Constants.START;
+import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_APPLYLEAVE;
 import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_CURRATTN;
 import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_PROFILE;
+import static mapp.com.sg.projectattendancetracker.Constants.TYPE;
 import static mapp.com.sg.projectattendancetracker.Constants.USERNAME;
 import static mapp.com.sg.projectattendancetracker.Constants.WORKPLACE;
 
@@ -64,6 +69,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     //db fetch prep
     private static String[] FROM_PROFILE = {_ID, BIRTHDATE, EMAIL, NAME, JOB, WORKPLACE, MAXANNUAL, SALARYTIER};
     private static String[] FROM_CURRATTN = {_ID, USERNAME, CLOCKIN, CLOCKOUT, ATTNSTATUS, LEAVE};
+    private static String[] FROM_APPLYLEAVE = {_ID, USERNAME, TYPE, START, END, DETAILS};
 
     @Override
     public void onCreate(Bundle saveInstanceState) {
@@ -126,6 +132,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
                     getSupportFragmentManager().beginTransaction().remove(fragment).commit();
                 }
                 //onCreate(new Bundle()); trying to remove fragments and just shot the AttnSummActivity page
+                break;
             case R.id.navMarkAttn:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new markAttnFragment()).commit();
@@ -190,7 +197,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void submitForm(View button){
-        fragment.submitForm(button);
+            fragment.submitForm(button);
     }
 
 
@@ -280,6 +287,46 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             values2.put(ATTNSTATUS, "1");
             values2.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values2);
+
+            ContentValues values3 = new ContentValues();
+            values2.put(USERNAME, username);
+            values2.put(CLOCKIN, "02/02/2020 07:01:56");
+            values2.put(CLOCKOUT, "02/02/2020 18:00:06");
+            values2.put(ATTNSTATUS, "1");
+            values2.put(LEAVE, "1");
+            db.insertOrThrow(TABLE_NAME_CURRATTN, null, values3);
+
+            ContentValues values4 = new ContentValues();
+            values2.put(USERNAME, username);
+            values2.put(CLOCKIN, "02/02/2020 07:01:56");
+            values2.put(CLOCKOUT, "02/02/2020 18:00:06");
+            values2.put(ATTNSTATUS, "1");
+            values2.put(LEAVE, "1");
+            db.insertOrThrow(TABLE_NAME_CURRATTN, null, values4);
+
+            ContentValues values5 = new ContentValues();
+            values2.put(USERNAME, username);
+            values2.put(CLOCKIN, "02/02/2020 07:01:56");
+            values2.put(CLOCKOUT, "02/02/2020 18:00:06");
+            values2.put(ATTNSTATUS, "1");
+            values2.put(LEAVE, "1");
+            db.insertOrThrow(TABLE_NAME_CURRATTN, null, values5);
+
+            ContentValues values6 = new ContentValues();
+            values2.put(USERNAME, username);
+            values2.put(CLOCKIN, "02/02/2020 07:01:56");
+            values2.put(CLOCKOUT, "02/02/2020 18:00:06");
+            values2.put(ATTNSTATUS, "1");
+            values2.put(LEAVE, "1");
+            db.insertOrThrow(TABLE_NAME_CURRATTN, null, values6);
+
+            ContentValues values7 = new ContentValues();
+            values2.put(USERNAME, username);
+            values2.put(CLOCKIN, "02/02/2020 07:01:56");
+            values2.put(CLOCKOUT, "02/02/2020 18:00:06");
+            values2.put(ATTNSTATUS, "1");
+            values2.put(LEAVE, "1");
+            db.insertOrThrow(TABLE_NAME_CURRATTN, null, values7);
         } else {
             return;
         }
@@ -319,6 +366,24 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
 
     //pastAttn methods
 
+    //apply4leave methods
+    private void addApply4Leave(String username, String leaveType, String leaveFrom, String leaveTo, String details){
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(USERNAME, username);
+        values.put(TYPE, leaveType);
+        values.put(START, String.valueOf(leaveFrom));
+        values.put(END, String.valueOf(leaveTo));
+        values.put(DETAILS, String.valueOf(details));
+        db.insertOrThrow(TABLE_NAME_APPLYLEAVE, null, values);
+    }
+
+    private Cursor getApply4Leave(String selection, String[] selectionArgs) {
+
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME_APPLYLEAVE, FROM_APPLYLEAVE, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
 
     //SharedPreferences callable methods
 //--------------------------------------------------------------------------------------------------

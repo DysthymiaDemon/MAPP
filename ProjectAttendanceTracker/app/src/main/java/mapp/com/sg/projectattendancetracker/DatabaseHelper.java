@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import static android.provider.BaseColumns._ID;
+import static mapp.com.sg.projectattendancetracker.Constants.ATTNRATE;
 import static mapp.com.sg.projectattendancetracker.Constants.ATTNSTATUS;
 import static mapp.com.sg.projectattendancetracker.Constants.BIRTHDATE;
 import static mapp.com.sg.projectattendancetracker.Constants.CLOCKIN;
@@ -15,12 +16,17 @@ import static mapp.com.sg.projectattendancetracker.Constants.END;
 import static mapp.com.sg.projectattendancetracker.Constants.JOB;
 import static mapp.com.sg.projectattendancetracker.Constants.LEAVE;
 import static mapp.com.sg.projectattendancetracker.Constants.MAXANNUAL;
+import static mapp.com.sg.projectattendancetracker.Constants.MONTH;
 import static mapp.com.sg.projectattendancetracker.Constants.NAME;
 import static mapp.com.sg.projectattendancetracker.Constants.SALARYTIER;
 import static mapp.com.sg.projectattendancetracker.Constants.START;
+import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_APPLYLEAVE;
 import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_CURRATTN;
 import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_PASTATTN;
 import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_PROFILE;
+import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_REPORTPROB;
+import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_REQOTHERS;
+import static mapp.com.sg.projectattendancetracker.Constants.TITLE;
 import static mapp.com.sg.projectattendancetracker.Constants.TYPE;
 import static mapp.com.sg.projectattendancetracker.Constants.USERNAME;
 import static mapp.com.sg.projectattendancetracker.Constants.WORKPLACE;
@@ -28,6 +34,7 @@ import static mapp.com.sg.projectattendancetracker.Constants.WORKPLACE;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "ronnietan.db";
     private static final int DATABASE_VERSION = 1;
+    private static DatabaseHelper databaseHelper = null;
 
     public DatabaseHelper(Context ctx){
         super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
@@ -45,8 +52,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 +CLOCKIN+" TEXT, "+CLOCKOUT+
                 " TEXT, "+ATTNSTATUS+" TEXT, "+LEAVE+" TEXT);");
 
-        db.execSQL("CREATE TABLE "+TABLE_NAME_PASTATTN+"( "+_ID
+        db.execSQL("CREATE TABLE "+TABLE_NAME_PASTATTN+" ("+_ID
+        +" INTEGER PRIMARY KEY AUTOINCREMENT, "+USERNAME+" TEXT NOT NULL, "+MONTH+" TEXT, "+ATTNRATE+" TEXT, "+LEAVE+" LEAVE);");
+
+        db.execSQL("CREATE TABLE "+TABLE_NAME_APPLYLEAVE+"( "+_ID
         +" INTEGER PRIMARY KEY AUTOINCREMENT, "+USERNAME+" TEXT NOT NULL, "+TYPE+" TEXT, "+START+" TEXT, "+END+" TEXT, "+DETAILS+" TEXT);");
+
+        db.execSQL("CREATE TABLE "+TABLE_NAME_REQOTHERS+" ("+_ID
+        +" INTEGER PRIMARY KEY AUTOINCREMENT, "+USERNAME+" TEXT NOT NULL, "+TITLE+" TEXT, "+DETAILS+" TEXT);");
+
+        db.execSQL("CREATE TABLE "+TABLE_NAME_REPORTPROB+" ("+_ID
+        +" INTEGER PRIMARY KEY AUTOINCREMENT, "+USERNAME+" TEXT NOT NULL, "+TITLE+" TEXT, "+DETAILS+" TEXT);");
 
     }
 
@@ -55,7 +71,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_PROFILE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_CURRATTN);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_PASTATTN);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_APPLYLEAVE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_REQOTHERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_REPORTPROB);
         onCreate(db);
+    }
+
+    public static DatabaseHelper getInstance(Context ctx){
+        if (databaseHelper == null){
+            databaseHelper = new DatabaseHelper(ctx);
+        }
+        return databaseHelper;
     }
 
 }

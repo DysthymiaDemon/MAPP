@@ -10,23 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
-
-import java.util.Date;
 
 import static android.provider.BaseColumns._ID;
 import static mapp.com.sg.projectattendancetracker.Constants.DETAILS;
 import static mapp.com.sg.projectattendancetracker.Constants.END;
 import static mapp.com.sg.projectattendancetracker.Constants.START;
 import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_APPLYLEAVE;
-import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_PROFILE;
 import static mapp.com.sg.projectattendancetracker.Constants.TYPE;
 import static mapp.com.sg.projectattendancetracker.Constants.USERNAME;
 
@@ -39,7 +36,7 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
     private EditText leaveTo;
     private EditText details;
 
-    DatabaseHelper databaseHelper;
+    private static DatabaseHelper databaseHelper;
     private static String[] FROM_APPLYLEAVE = {_ID, USERNAME, TYPE, START, END, DETAILS};
 
     public static apply4LeaveFragment newInstance(String uName){
@@ -55,7 +52,7 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_apply4leave, container, false);
 
-        //apply for leave dpordown list
+        //apply for leave dropdown list
         Spinner spinner = (Spinner) view.findViewById(R.id.leaveTypeSpinner);
         spinner.setOnItemSelectedListener(this);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
@@ -64,18 +61,26 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
         spinner.setAdapter(adapter);
 
         //get all editText
-        details = (EditText) getActivity().findViewById(R.id.detailsEditText);
+        details = (EditText) getActivity().findViewById(R.id.detailsApplyEditText);
         leaveFrom = (EditText) getActivity().findViewById(R.id.startEditText);
         leaveTo = (EditText) getActivity().findViewById(R.id.endEditText);
         System.out.println(leaveFrom);
         System.out.println(leaveTo);
 
         //init db
-        databaseHelper = new DatabaseHelper(getActivity());
+        databaseHelper = DatabaseHelper.getInstance(getActivity());
 
         if(getArguments() != null){
             username = getArguments().getString(ARG_USERNAME);
         }
+
+        final Button submitButton = (Button) getActivity().findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submitForm(submitButton);
+            }
+        });
 
         return view;
     }
@@ -106,9 +111,14 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
 
     }
 
+    /*
+    submitForm is fragment_apply4leave.xml
+    <Button android:id="@+id/button" android:onClick="submitForm"/>*/
     public void submitForm(View button){
         //write to db
+        System.out.println("submitForm triggered");
         addApply4Leave(username);
+        System.out.println("addApply4Leave doneS");
 
         //check and confirm
         String selection = USERNAME+" = ?";
