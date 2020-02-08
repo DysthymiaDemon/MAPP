@@ -10,7 +10,7 @@
     <string name="loginTitle">登录系统</string>
     <string name="login">登录</string>
     <string name="MCs">医疗证书</string>
-    <string name="annualLeaves">年度缺勤</string>
+    <string name="annualLeaves">年假</string>
     <string name="apply4leave">申请请假</string>
     <string name="attnRate">出勤率</string>
     <string name="leaves">休假</string>
@@ -29,13 +29,4 @@
     <string name="notifications">通知事项</string>
     <string name="userOptions">用户选项</string>
     <string name="darkTheme">黑暗主题</string>
-    <string name="annualLeave">年度缺勤</string>
-    <string name="childcareLeave">育儿假</string>
-    <string name="emergencyLeave">紧急撤离</string>
-    <string name="medicalLeave">病假</string>
-    <string name="paternityLeave">育婴假</string>
-    <string name="typeOfLeave">休假类型</string>
-    <string name="details">细节</string>
-    <string name="endDate">结束日期</string>
-    <string name="startDate">开始日期</string>
 </resources>
