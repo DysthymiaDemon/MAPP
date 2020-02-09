@@ -37,6 +37,7 @@
     <string name="typeOfLeave">Type of Leave</string>
     <string name="startDate">Start Date</string>
     <string name="endDate">End Date</string>
+    <string name="title">Title</string>
     <string name="details">Details</string>
     
     <string-array name="leaveTypeArray">

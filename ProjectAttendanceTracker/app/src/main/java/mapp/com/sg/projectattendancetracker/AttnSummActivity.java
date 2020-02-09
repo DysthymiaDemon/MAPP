@@ -55,7 +55,9 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     private String username;
     private DatabaseHelper databaseHelper;
     private DrawerLayout drawerLayout;
-    private apply4LeaveFragment fragment;
+    private apply4LeaveFragment apply4leavefragment;
+    private requestOthersFragment requestothersfragment;
+    private reportProblemFragment reportproblemfragment;
 
     //init SharedPreferences
     public static SharedPreferences preferences;
@@ -75,6 +77,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
         setContentView(R.layout.activity_attnsumm);
+        setTitle(R.string.attn_summ);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -138,10 +141,19 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
                         new markAttnFragment()).commit();
                 break;
             case R.id.navApplyForLeave:
-                apply4LeaveFragment fragment = apply4LeaveFragment.newInstance(username);
+                apply4LeaveFragment apply4leavefragment = apply4LeaveFragment.newInstance(username);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        fragment).commit();
-
+                        apply4leavefragment).commit();
+                break;
+            case R.id.navReqOthers:
+                requestOthersFragment requestothersfragment = requestOthersFragment.newInstance(username);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        requestothersfragment).commit();
+                break;
+            case R.id.navRepProblem:
+                reportProblemFragment reportproblemfragment = reportProblemFragment.newInstance(username);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        reportproblemfragment).commit();
                 break;
             case R.id.navSettings:
                 Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
@@ -196,9 +208,16 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void submitForm(View button){
-            fragment.submitForm(button);
+            apply4leavefragment.submitForm(button);
     }
 
+    public void submitRequest(View button){
+        requestothersfragment.submitForm(button);
+    }
+
+    public void submitReport(View button){
+        reportproblemfragment.submitForm(button);
+    }
 
     //general callable methods
 //--------------------------------------------------------------------------------------------------

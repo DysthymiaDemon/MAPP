@@ -46,7 +46,7 @@ public interface Constants extends BaseColumns{
     public static final String TITLE = "title";
 //    public static final String DETAILS = "details";
 
-    //columns reportProblems
+    //columns reportProblem
 //    public static final String USERNAME = "name";
 //    public static final String TITLE = "title";
 //    public static final String DETAILS = "details";

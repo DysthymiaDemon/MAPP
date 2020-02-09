@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 
 import static android.provider.BaseColumns._ID;
@@ -55,6 +55,7 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_apply4leave, container, false);
+        getActivity().setTitle(R.string.apply4leave);
 
         //apply for leave dropdown list
         Spinner spinner = (Spinner) view.findViewById(R.id.leaveTypeSpinner);
@@ -78,7 +79,7 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
             username = getArguments().getString(ARG_USERNAME);
         }
 
-        submitButton = (Button) view.findViewById(R.id.submitButton);
+        submitButton = (Button) view.findViewById(R.id.submitReqButton);
         submitButton.setOnClickListener(this);
 
         return view;
@@ -105,9 +106,14 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
         }
     }
 
+    /*public void setAppBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getResources().getText(R.string.attn_summ));
+    }*/
+
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
+//      nothing required
     }
 
     @Override
@@ -133,8 +139,8 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
         Log.d("USERNAME: ", USERNAME);
         Cursor cursorCheck = getApply4Leave(selection, selectionArgs);
         if(!cursorCheck.moveToLast()){
-            getActivity().getFragmentManager().popBackStack();
             Toast.makeText(getActivity(),"Record Inserted!", Toast.LENGTH_SHORT).show();
+            getActivity().getFragmentManager().popBackStack();
         } else {
             Toast.makeText(getActivity(), "ERROR NO RECORD FOUND", Toast.LENGTH_SHORT).show();
         }
