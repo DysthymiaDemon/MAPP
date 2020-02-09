@@ -10,7 +10,7 @@
     <string name="loginTitle">登录系统</string>
     <string name="login">登录</string>
     <string name="MCs">医疗证书</string>
-    <string name="annualLeaves">年度缺勤</string>
+    <string name="annualLeaves">年假</string>
     <string name="apply4leave">申请请假</string>
     <string name="attnRate">出勤率</string>
     <string name="leaves">休假</string>
