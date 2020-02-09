@@ -8,6 +8,7 @@ public interface Constants extends BaseColumns{
     public static final String TABLE_NAME_PROFILE = "profile";
     public static final String TABLE_NAME_CURRATTN = "currattn";
     public static final String TABLE_NAME_PASTATTN = "pastattn";
+    public static final String TABLE_NAME_MARKATTN = "markattn";
     public static final String TABLE_NAME_APPLYLEAVE = "applyleave";
     public static final String TABLE_NAME_REQOTHERS = "reqothers";
     public static final String TABLE_NAME_REPORTPROB = "reportprob";
@@ -21,7 +22,7 @@ public interface Constants extends BaseColumns{
     public static final String MAXANNUAL = "maxannual";
     public static final String SALARYTIER = "salarytier";
 
-    //columns currAttn
+    //columns currAttn also for mark attn
     public static final String USERNAME = "name";
     public static final String CLOCKIN = "clockin";
     public static final String CLOCKOUT = "clockout";
@@ -33,6 +34,7 @@ public interface Constants extends BaseColumns{
     public static final String MONTH = "month";
     public static final String ATTNRATE = "attnrate";
     public static final String LEAVES = "leaves";
+
 
     //columns applyforleave
 //    public static final String USERNAME = "name";
