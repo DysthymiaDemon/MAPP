@@ -289,40 +289,40 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
 
             ContentValues values3 = new ContentValues();
             values2.put(USERNAME, username);
-            values2.put(CLOCKIN, "02/02/2020 07:01:56");
-            values2.put(CLOCKOUT, "02/02/2020 18:00:06");
+            values2.put(CLOCKIN, "03/02/2020 07:01:56");
+            values2.put(CLOCKOUT, "03/02/2020 18:00:06");
             values2.put(ATTNSTATUS, "1");
             values2.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values3);
 
             ContentValues values4 = new ContentValues();
             values2.put(USERNAME, username);
-            values2.put(CLOCKIN, "02/02/2020 07:01:56");
-            values2.put(CLOCKOUT, "02/02/2020 18:00:06");
+            values2.put(CLOCKIN, "04/02/2020 07:01:56");
+            values2.put(CLOCKOUT, "04/02/2020 18:00:06");
             values2.put(ATTNSTATUS, "1");
             values2.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values4);
 
             ContentValues values5 = new ContentValues();
             values2.put(USERNAME, username);
-            values2.put(CLOCKIN, "02/02/2020 07:01:56");
-            values2.put(CLOCKOUT, "02/02/2020 18:00:06");
+            values2.put(CLOCKIN, "05/02/2020 07:01:56");
+            values2.put(CLOCKOUT, "05/02/2020 18:00:06");
             values2.put(ATTNSTATUS, "1");
             values2.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values5);
 
             ContentValues values6 = new ContentValues();
             values2.put(USERNAME, username);
-            values2.put(CLOCKIN, "02/02/2020 07:01:56");
-            values2.put(CLOCKOUT, "02/02/2020 18:00:06");
+            values2.put(CLOCKIN, "06/02/2020 07:01:56");
+            values2.put(CLOCKOUT, "06/02/2020 18:00:06");
             values2.put(ATTNSTATUS, "1");
             values2.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values6);
 
             ContentValues values7 = new ContentValues();
             values2.put(USERNAME, username);
-            values2.put(CLOCKIN, "02/02/2020 07:01:56");
-            values2.put(CLOCKOUT, "02/02/2020 18:00:06");
+            values2.put(CLOCKIN, "07/02/2020 07:01:56");
+            values2.put(CLOCKOUT, "07/02/2020 18:00:06");
             values2.put(ATTNSTATUS, "1");
             values2.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values7);

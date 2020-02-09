@@ -3,8 +3,10 @@ package mapp.com.sg.projectattendancetracker;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,8 +68,8 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
         details = (EditText) getActivity().findViewById(R.id.detailsApplyEditText);
         leaveFrom = (EditText) getActivity().findViewById(R.id.startEditText);
         leaveTo = (EditText) getActivity().findViewById(R.id.endEditText);
-        System.out.println(leaveFrom);
-        System.out.println(leaveTo);
+        System.out.println("->:"+leaveFrom);
+        System.out.println("->:"+leaveTo);
 
         //init db
         databaseHelper = DatabaseHelper.getInstance(getActivity());
@@ -127,9 +129,12 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
         //check and confirm
         String selection = USERNAME+" = ?";
         String[] selectionArgs = {username};
+        Log.d("username", username);
+        Log.d("USERNAME: ", USERNAME);
         Cursor cursorCheck = getApply4Leave(selection, selectionArgs);
-        if(cursorCheck != null){
-            Toast.makeText(getActivity(),"Please enter your username", Toast.LENGTH_SHORT).show();
+        if(!cursorCheck.moveToLast()){
+            getActivity().getFragmentManager().popBackStack();
+            Toast.makeText(getActivity(),"Record Inserted!", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(getActivity(), "ERROR NO RECORD FOUND", Toast.LENGTH_SHORT).show();
         }
@@ -138,13 +143,14 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
     //db callable methods
 //--------------------------------------------------------------------------------------------------
     private void addApply4Leave(String username){
+        System.out.println(leaveFrom.getText().toString());
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(USERNAME, username);
         values.put(TYPE, leaveType);
-        values.put(START, String.valueOf(leaveFrom));
-        values.put(END, String.valueOf(leaveTo));
-        values.put(DETAILS, String.valueOf(details));
+        values.put(START, leaveFrom.getText().toString());
+        values.put(END, leaveTo.getText().toString());
+        values.put(DETAILS, details.getText().toString());
         db.insertOrThrow(TABLE_NAME_APPLYLEAVE, null, values);
     }
 
@@ -152,6 +158,7 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_APPLYLEAVE, FROM_APPLYLEAVE, selection, selectionArgs, null, null, null);
+        Log.d("Cursor: ", DatabaseUtils.dumpCursorToString(cursor));
         return cursor;
     }
 

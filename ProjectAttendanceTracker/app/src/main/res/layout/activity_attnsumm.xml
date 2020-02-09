@@ -25,7 +25,6 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="412dp"
@@ -243,7 +242,6 @@
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
