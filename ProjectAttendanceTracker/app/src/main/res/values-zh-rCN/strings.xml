@@ -29,7 +29,6 @@
     <string name="notifications">通知事项</string>
     <string name="userOptions">用户选项</string>
     <string name="darkTheme">黑暗主题</string>
-<<<<<<< Updated upstream
     <string name="annualLeave">年度缺勤</string>
     <string name="childcareLeave">育儿假</string>
     <string name="emergencyLeave">紧急撤离</string>
@@ -39,15 +38,4 @@
     <string name="details">细节</string>
     <string name="endDate">结束日期</string>
     <string name="startDate">开始日期</string>
-=======
-    <string name="annualLeave">年假</string>
-    <string name="childcareLeave">育儿假</string>
-    <string name="details">细节</string>
-    <string name="emergencyLeave">紧急撤离</string>
-    <string name="endDate">结束日期</string>
-    <string name="medicalLeave">病假</string>
-    <string name="paternityLeave">陪产假</string>
-    <string name="startDate">开始日期</string>
-    <string name="typeOfLeave">休假类型</string>
->>>>>>> Stashed changes
 </resources>

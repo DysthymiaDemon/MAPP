@@ -32,16 +32,10 @@
     <string name="typeOfLeave">Type of Leave</string>
     <string name="childcareLeave">Childcare Leave</string>
     <string name="medicalLeave">Medical Leave</string>
-<<<<<<< Updated upstream
     <string name="paternityLeave">Parental Leave</string>
     <string name="annualLeave">Annual Leave</string>
     <string name="emergencyLeave">Emergency Leave</string>
-=======
-    <string name="paternityLeave">Paternity Leave</string>
-    <string name="annualLeave">Annual Leave</string>
-    <string name="emergencyLeave">Emergency Leave</string>
     <string name="typeOfLeave">Type of Leave</string>
->>>>>>> Stashed changes
     <string name="startDate">Start Date</string>
     <string name="endDate">End Date</string>
     <string name="details">Details</string>

@@ -76,7 +76,7 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
             username = getArguments().getString(ARG_USERNAME);
         }
 
-        submitButton = (Button) getActivity().findViewById(R.id.submitButton);
+        submitButton = (Button) view.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(this);
 
         return view;
