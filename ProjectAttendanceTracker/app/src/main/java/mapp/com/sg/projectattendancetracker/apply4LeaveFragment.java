@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,7 +28,7 @@ import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_APPLYLEA
 import static mapp.com.sg.projectattendancetracker.Constants.TYPE;
 import static mapp.com.sg.projectattendancetracker.Constants.USERNAME;
 
-public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
     private static final String ARG_USERNAME = "argUsername";
 
     private String username;
@@ -35,6 +36,7 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
     private EditText leaveFrom;
     private EditText leaveTo;
     private EditText details;
+    private Button submitButton;
 
     private static DatabaseHelper databaseHelper;
     private static String[] FROM_APPLYLEAVE = {_ID, USERNAME, TYPE, START, END, DETAILS};
@@ -74,13 +76,8 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
             username = getArguments().getString(ARG_USERNAME);
         }
 
-        final Button submitButton = (Button) getActivity().findViewById(R.id.submitButton);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submitForm(submitButton);
-            }
-        });
+        submitButton = (Button) getActivity().findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(this);
 
         return view;
     }
@@ -109,6 +106,13 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == submitButton){
+            submitForm(v);
+        }
     }
 
     /*
@@ -150,5 +154,6 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
         Cursor cursor = db.query(TABLE_NAME_APPLYLEAVE, FROM_APPLYLEAVE, selection, selectionArgs, null, null, null);
         return cursor;
     }
+
 
 }
