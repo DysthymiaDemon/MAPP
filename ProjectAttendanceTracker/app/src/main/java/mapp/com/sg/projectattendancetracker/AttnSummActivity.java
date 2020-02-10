@@ -29,6 +29,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.Calendar;
 
 import static android.provider.BaseColumns._ID;
+import static mapp.com.sg.projectattendancetracker.Constants.ATTNRATE;
 import static mapp.com.sg.projectattendancetracker.Constants.ATTNSTATUS;
 import static mapp.com.sg.projectattendancetracker.Constants.BIRTHDATE;
 import static mapp.com.sg.projectattendancetracker.Constants.CLOCKIN;
@@ -38,12 +39,15 @@ import static mapp.com.sg.projectattendancetracker.Constants.EMAIL;
 import static mapp.com.sg.projectattendancetracker.Constants.END;
 import static mapp.com.sg.projectattendancetracker.Constants.JOB;
 import static mapp.com.sg.projectattendancetracker.Constants.LEAVE;
+import static mapp.com.sg.projectattendancetracker.Constants.LEAVES;
 import static mapp.com.sg.projectattendancetracker.Constants.MAXANNUAL;
+import static mapp.com.sg.projectattendancetracker.Constants.MONTH;
 import static mapp.com.sg.projectattendancetracker.Constants.NAME;
 import static mapp.com.sg.projectattendancetracker.Constants.SALARYTIER;
 import static mapp.com.sg.projectattendancetracker.Constants.START;
 import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_APPLYLEAVE;
 import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_CURRATTN;
+import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_PASTATTN;
 import static mapp.com.sg.projectattendancetracker.Constants.TABLE_NAME_PROFILE;
 import static mapp.com.sg.projectattendancetracker.Constants.TYPE;
 import static mapp.com.sg.projectattendancetracker.Constants.USERNAME;
@@ -71,6 +75,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     //db fetch prep
     private static String[] FROM_PROFILE = {_ID, BIRTHDATE, EMAIL, NAME, JOB, WORKPLACE, MAXANNUAL, SALARYTIER};
     private static String[] FROM_CURRATTN = {_ID, USERNAME, CLOCKIN, CLOCKOUT, ATTNSTATUS, LEAVE};
+    private static String[] FROM_PASTNATTN = {_ID, USERNAME, MONTH, ATTNRATE, LEAVES};
     private static String[] FROM_APPLYLEAVE = {_ID, USERNAME, TYPE, START, END, DETAILS};
 
     @Override
@@ -124,6 +129,14 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             showCurrAttn(getCurrAttn());
         } else {
             showCurrAttn(getCurrAttn());
+        }
+
+        if (getSharedPreferences(loadDbPastAttnKey) != "1") {
+            addPastAttn(username);
+            setSharedPreferences(loadDbPastAttnKey, "1");
+            //showCurrAttn(getCurrAttn());
+        } else {
+            //showCurrAttn(getCurrAttn());
         }
     }
 
@@ -288,7 +301,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         String currentDateandTime = sdf.format(new Date());*/
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_CURRATTN, FROM_CURRATTN, null, null, null, null, null);
-        if (cursor.getCount() < 2) {
+        if (cursor.getCount() < 8) {
             db = databaseHelper.getWritableDatabase();
             ContentValues values1 = new ContentValues();
             values1.put(USERNAME, username);
@@ -361,7 +374,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         int countLeave = 0;
         int MIA = 0;
 
-        while (cursor.moveToNext()) {
+        while (cursor.moveToLast()) {
             if (cursor.getString(4).equals("1")) {
                 countPresent++;
             } else if (!cursor.getString(5).equals("1")) {
@@ -383,6 +396,46 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     }
 
     //pastAttn methods
+    private void addPastAttn(String username){
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME_PASTATTN, FROM_PASTNATTN,null,null,null,null,null);
+        if(cursor.getCount() < 5){
+            db = databaseHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(USERNAME, username);
+            values.put(MONTH, "January");
+            values.put(ATTNSTATUS, "87");
+            values.put(LEAVE, "3");
+            db.insertOrThrow(TABLE_NAME_PASTATTN, null, values);
+
+            ContentValues values1 = new ContentValues();
+            values1.put(USERNAME, username);
+            values1.put(MONTH, "December");
+            values1.put(ATTNSTATUS, "94");
+            values1.put(LEAVE, "2");
+            db.insertOrThrow(TABLE_NAME_PASTATTN, null, values1);
+
+            ContentValues values2 = new ContentValues();
+            values2.put(USERNAME, username);
+            values2.put(MONTH, "November");
+            values2.put(ATTNSTATUS, "98");
+            values2.put(LEAVE, "1");
+            db.insertOrThrow(TABLE_NAME_PASTATTN, null, values2);
+
+            ContentValues values3 = new ContentValues();
+            values3.put(USERNAME, username);
+            values3.put(MONTH, "October");
+            values3.put(ATTNSTATUS, "85");
+            values3.put(LEAVE, "4");
+            db.insertOrThrow(TABLE_NAME_PASTATTN, null, values3);
+        }
+    }
+
+    private Cursor getPastAttn(){
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME_PASTATTN, FROM_PASTNATTN,null,null,null, null, _ID+" DESC");
+        return cursor;
+    }
 
     //apply4leave methods
     private void addApply4Leave(String username, String leaveType, String leaveFrom, String leaveTo, String details){
