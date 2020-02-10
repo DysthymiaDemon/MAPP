@@ -4,12 +4,14 @@ import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +25,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-
+import de.codecrafters.tableview.TableView;
+import de.codecrafters.tableview.listeners.TableDataClickListener;
+import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
+import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Calendar;
@@ -57,8 +62,14 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
 
     private String email;
     private String username;
+    private EditText monthEditText;
+    private EditText attnRateEditText;
+    private EditText leavesEditText;
     private DatabaseHelper databaseHelper;
     private DrawerLayout drawerLayout;
+    TableView<String[]> tb;
+    TableHelper tableHelper;
+
     private apply4LeaveFragment apply4leavefragment;
     private requestOthersFragment requestothersfragment;
     private reportProblemFragment reportproblemfragment;
@@ -124,7 +135,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
 
         //currAttn db
         if (getSharedPreferences(loadDbCurrAttnKey) != "1") {
-            addCurrAttn(username);
+            this.addCurrAttn(username);
             setSharedPreferences(loadDbCurrAttnKey, "1");
             showCurrAttn(getCurrAttn());
         } else {
@@ -138,6 +149,14 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         } else {
             //showCurrAttn(getCurrAttn());
         }
+
+        //pastattn db
+        tableHelper=new TableHelper(this);
+        tb = (TableView<String[]>) findViewById(R.id.tableView);
+        tb.setColumnCount(3);
+        tb.setHeaderBackgroundColor(Color.parseColor(String.valueOf(R.color.colorPrimary)));
+        tb.setHeaderAdapter(new SimpleTableHeaderAdapter(this,tableHelper.getPastAttnHeaders()));
+        tb.setDataAdapter(new SimpleTableDataAdapter(this, tableHelper.getPastAttn()));
     }
 
     @Override
@@ -241,6 +260,8 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         return username;
     }
 
+
+
     public void setAppBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getResources().getText(R.string.attn_summ));
@@ -299,9 +320,10 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     private void addCurrAttn(String username) {
         /*SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy_hh:mm:ss", Locale.getDefault());
         String currentDateandTime = sdf.format(new Date());*/
-        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
         Cursor cursor = db.query(TABLE_NAME_CURRATTN, FROM_CURRATTN, null, null, null, null, null);
-        if (cursor.getCount() < 8) {
+
+        if (cursor.getCount() < 7) {
             db = databaseHelper.getWritableDatabase();
             ContentValues values1 = new ContentValues();
             values1.put(USERNAME, username);
@@ -361,6 +383,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         } else {
             return;
         }
+        cursor.close();
     }
 
     private Cursor getCurrAttn() {

@@ -206,7 +206,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/currMonthTextView" />
 
 
-                <TableLayout
+                <RelativeLayout
                     android:id="@+id/pastAttnTableLayout"
                     android:layout_width="412dp"
                     android:layout_height="322dp"
@@ -216,37 +216,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/leaveProgressBar"
                     app:layout_constraintVertical_bias="1.0"
-                    android:stretchColumns="1">
+                    android:layout_gravity="center"
+                    android:stretchColumns="*">
 
-                    <TableRow>
+                    <de.codecrafters.tableview.TableView
+                        android:id="@+id/tableView"
+                        android_id="@+id/tableView"
+                        android_layout_height="wrap_content"
+                        android_layout_width="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
 
-                        <TextView
-                            android:layout_column="1"
-                            android:gravity="center"
-                            android:text="@string/month"></TextView>
-
-                        <TextView
-                            android:layout_column="2it"
-                            android:text="@string/attnRate"
-                            android:gravity="center"></TextView>
-
-                        <TextView
-                            android:layout_column="3"
-                            android:text="@string/leaves"
-                            android:gravity="center"></TextView>
-
-                    </TableRow>
-
-                    <TableRow>
-
-
-                    </TableRow>
-
-                    <TableRow>
-
-
-                    </TableRow>
-                </TableLayout>
+                </RelativeLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

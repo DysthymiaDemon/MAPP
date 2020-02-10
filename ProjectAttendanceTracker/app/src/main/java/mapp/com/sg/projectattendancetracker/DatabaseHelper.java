@@ -33,8 +33,8 @@ import static mapp.com.sg.projectattendancetracker.Constants.WORKPLACE;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "ronnietan.db";
-    private static final int DATABASE_VERSION = 1;
-    private static DatabaseHelper databaseHelper = null;
+    private static final int DATABASE_VERSION = 2;
+    private static DatabaseHelper databaseHelper;
 
     public DatabaseHelper(Context ctx){
         super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
@@ -53,7 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " TEXT, "+ATTNSTATUS+" TEXT, "+LEAVE+" TEXT);");
 
         db.execSQL("CREATE TABLE "+TABLE_NAME_PASTATTN+" ("+_ID
-        +" INTEGER PRIMARY KEY AUTOINCREMENT, "+USERNAME+" TEXT NOT NULL, "+MONTH+" TEXT, "+ATTNRATE+" TEXT, "+LEAVE+" LEAVE);");
+        +" INTEGER PRIMARY KEY AUTOINCREMENT, "+MONTH+" TEXT, "+ATTNRATE+" TEXT, "+LEAVE+" LEAVE);");
 
         db.execSQL("CREATE TABLE "+TABLE_NAME_APPLYLEAVE+"( "+_ID
         +" INTEGER PRIMARY KEY AUTOINCREMENT, "+USERNAME+" TEXT NOT NULL, "+TYPE+" TEXT, "+START+" TEXT, "+END+" TEXT, "+DETAILS+" TEXT);");
