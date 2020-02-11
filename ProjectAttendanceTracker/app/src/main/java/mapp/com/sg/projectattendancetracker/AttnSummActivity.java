@@ -86,7 +86,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     //db fetch prep
     private static String[] FROM_PROFILE = {_ID, BIRTHDATE, EMAIL, NAME, JOB, WORKPLACE, MAXANNUAL, SALARYTIER};
     private static String[] FROM_CURRATTN = {_ID, USERNAME, CLOCKIN, CLOCKOUT, ATTNSTATUS, LEAVE};
-    private static String[] FROM_PASTNATTN = {_ID, USERNAME, MONTH, ATTNRATE, LEAVES};
+    private static String[] FROM_PASTNATTN = {_ID, MONTH, ATTNRATE, LEAVES};
     private static String[] FROM_APPLYLEAVE = {_ID, USERNAME, TYPE, START, END, DETAILS};
 
     @Override
@@ -145,9 +145,9 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         if (getSharedPreferences(loadDbPastAttnKey) != "1") {
             addPastAttn(username);
             setSharedPreferences(loadDbPastAttnKey, "1");
-            //showCurrAttn(getCurrAttn());
+            showCurrAttn(getCurrAttn());
         } else {
-            //showCurrAttn(getCurrAttn());
+            showCurrAttn(getCurrAttn());
         }
 
         //pastattn db
@@ -323,7 +323,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         Cursor cursor = db.query(TABLE_NAME_CURRATTN, FROM_CURRATTN, null, null, null, null, null);
 
-        if (cursor.getCount() < 7) {
+        if (cursor.getCount() < 8) {
             db = databaseHelper.getWritableDatabase();
             ContentValues values1 = new ContentValues();
             values1.put(USERNAME, username);
@@ -342,43 +342,43 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values2);
 
             ContentValues values3 = new ContentValues();
-            values2.put(USERNAME, username);
-            values2.put(CLOCKIN, "03/02/2020 07:01:56");
-            values2.put(CLOCKOUT, "03/02/2020 18:00:06");
-            values2.put(ATTNSTATUS, "1");
-            values2.put(LEAVE, "1");
+            values3.put(USERNAME, username);
+            values3.put(CLOCKIN, "03/02/2020 07:01:56");
+            values3.put(CLOCKOUT, "03/02/2020 18:00:06");
+            values3.put(ATTNSTATUS, "1");
+            values3.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values3);
 
             ContentValues values4 = new ContentValues();
-            values2.put(USERNAME, username);
-            values2.put(CLOCKIN, "04/02/2020 07:01:56");
-            values2.put(CLOCKOUT, "04/02/2020 18:00:06");
-            values2.put(ATTNSTATUS, "1");
-            values2.put(LEAVE, "1");
+            values4.put(USERNAME, username);
+            values4.put(CLOCKIN, "04/02/2020 07:01:56");
+            values4.put(CLOCKOUT, "04/02/2020 18:00:06");
+            values4.put(ATTNSTATUS, "1");
+            values4.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values4);
 
             ContentValues values5 = new ContentValues();
-            values2.put(USERNAME, username);
-            values2.put(CLOCKIN, "05/02/2020 07:01:56");
-            values2.put(CLOCKOUT, "05/02/2020 18:00:06");
-            values2.put(ATTNSTATUS, "1");
-            values2.put(LEAVE, "1");
+            values5.put(USERNAME, username);
+            values5.put(CLOCKIN, "05/02/2020 07:01:56");
+            values5.put(CLOCKOUT, "05/02/2020 18:00:06");
+            values5.put(ATTNSTATUS, "1");
+            values5.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values5);
 
             ContentValues values6 = new ContentValues();
-            values2.put(USERNAME, username);
-            values2.put(CLOCKIN, "06/02/2020 07:01:56");
-            values2.put(CLOCKOUT, "06/02/2020 18:00:06");
-            values2.put(ATTNSTATUS, "1");
-            values2.put(LEAVE, "1");
+            values6.put(USERNAME, username);
+            values6.put(CLOCKIN, "06/02/2020 07:01:56");
+            values6.put(CLOCKOUT, "06/02/2020 18:00:06");
+            values6.put(ATTNSTATUS, "1");
+            values6.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values6);
 
             ContentValues values7 = new ContentValues();
-            values2.put(USERNAME, username);
-            values2.put(CLOCKIN, "07/02/2020 07:01:56");
-            values2.put(CLOCKOUT, "07/02/2020 18:00:06");
-            values2.put(ATTNSTATUS, "1");
-            values2.put(LEAVE, "1");
+            values7.put(USERNAME, username);
+            values7.put(CLOCKIN, "07/02/2020 07:01:56");
+            values7.put(CLOCKOUT, "07/02/2020 18:00:06");
+            values7.put(ATTNSTATUS, "1");
+            values7.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values7);
         } else {
             return;
