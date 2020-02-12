@@ -31,6 +31,7 @@ import de.codecrafters.tableview.toolkit.SimpleTableDataAdapter;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import com.google.android.material.navigation.NavigationView;
 
+import java.security.spec.ECField;
 import java.util.Calendar;
 
 import static android.provider.BaseColumns._ID;
@@ -124,39 +125,58 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         //profile image
         //loadProfileImg(username);
 
-        //profile db
-        if (getSharedPreferences(loadDbProfileKey) != "1") {
-            addProfile(email, username);
-            setSharedPreferences(loadDbProfileKey, "1");
-            showProfile(getProfile());
-        } else {
-            showProfile(getProfile());
+        try{
+            //profile db
+            if (getSharedPreferences(loadDbProfileKey) != "1") {
+                addProfile(email, username);
+                setSharedPreferences(loadDbProfileKey, "1");
+                showProfile(getProfile());
+            } else {
+                showProfile(getProfile());
+            }
+        } catch (Exception ex){
+            Log.d("profile db", "Exception occured", ex);
+            System.out.println(ex);
         }
 
-        //currAttn db
-        if (getSharedPreferences(loadDbCurrAttnKey) != "1") {
-            this.addCurrAttn(username);
-            setSharedPreferences(loadDbCurrAttnKey, "1");
-            showCurrAttn(getCurrAttn());
-        } else {
-            showCurrAttn(getCurrAttn());
+        try{
+            //currAttn db
+            if (getSharedPreferences(loadDbCurrAttnKey) != "1") {
+                this.addCurrAttn(username);
+                setSharedPreferences(loadDbCurrAttnKey, "1");
+                showCurrAttn(getCurrAttn());
+            } else {
+                showCurrAttn(getCurrAttn());
+            }
+        }catch (Exception ex){
+            Log.d("currAttn db", "Exception occured", ex);
+            System.out.println(ex);
         }
 
-        if (getSharedPreferences(loadDbPastAttnKey) != "1") {
-            addPastAttn(username);
-            setSharedPreferences(loadDbPastAttnKey, "1");
-            showCurrAttn(getCurrAttn());
-        } else {
-            showCurrAttn(getCurrAttn());
+        try{
+            //pastAttn db
+            if (getSharedPreferences(loadDbPastAttnKey) != "1") {
+                addPastAttn(username);
+                setSharedPreferences(loadDbPastAttnKey, "1");
+            }
+        } catch (Exception ex){
+            Log.d("PastAttn db", "Exception occured", ex);
+            System.out.println(ex);
         }
 
-        //pastattn db
-        tableHelper=new TableHelper(this);
-        tb = (TableView<String[]>) findViewById(R.id.tableView);
-        tb.setColumnCount(3);
-        tb.setHeaderBackgroundColor(Color.parseColor(String.valueOf(R.color.colorPrimary)));
-        tb.setHeaderAdapter(new SimpleTableHeaderAdapter(this,tableHelper.getPastAttnHeaders()));
-        tb.setDataAdapter(new SimpleTableDataAdapter(this, tableHelper.getPastAttn()));
+        try{
+            //pastattn db
+            System.out.println("pastattn db display start");
+            tableHelper=new TableHelper(this);
+            tb = (TableView<String[]>) findViewById(R.id.tableView);
+            tb.setColumnCount(3);
+            tb.setHeaderBackgroundColor(Color.parseColor(String.valueOf(R.color.colorPrimary)));
+            tb.setHeaderAdapter(new SimpleTableHeaderAdapter(this,tableHelper.getPastAttnHeaders()));
+            tb.setDataAdapter(new SimpleTableDataAdapter(this, tableHelper.getPastAttn()));
+        }catch (Exception ex){
+            Log.d("PastAttn db", "Exception occured", ex);
+            System.out.println(ex);
+        }
     }
 
     @Override
@@ -380,7 +400,9 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             values7.put(ATTNSTATUS, "1");
             values7.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values7);
+            System.out.println("addCurrAttn added db entries");
         } else {
+            System.out.println("addCurrAttn did not add db entries");
             return;
         }
         cursor.close();
@@ -389,6 +411,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     private Cursor getCurrAttn() {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_CURRATTN, FROM_CURRATTN, null, null, null, null, null);
+        System.out.println("getCurrAttn done");
         return cursor;
     }
 
@@ -416,6 +439,8 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         ((ProgressBar) findViewById(R.id.leaveProgressBar)).setMax(3);
         ((ProgressBar) findViewById(R.id.leaveProgressBar)).setProgress(countLeave);
         ((TextView) findViewById(R.id.leavesNumTextView)).setText(countLeave + "/" + 3);
+
+        System.out.println("showCurrAttn done");
     }
 
     //pastAttn methods
@@ -451,12 +476,18 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             values3.put(ATTNSTATUS, "85");
             values3.put(LEAVE, "4");
             db.insertOrThrow(TABLE_NAME_PASTATTN, null, values3);
+            System.out.println("addPastAttn added db entries");
+        } else{
+            System.out.println("addPastAttn did not add db entries");
+            return;
         }
+        cursor.close();
     }
 
     private Cursor getPastAttn(){
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_PASTATTN, FROM_PASTNATTN,null,null,null, null, _ID+" DESC");
+        System.out.println("getPastAttn done");
         return cursor;
     }
 
@@ -470,12 +501,14 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         values.put(END, String.valueOf(leaveTo));
         values.put(DETAILS, String.valueOf(details));
         db.insertOrThrow(TABLE_NAME_APPLYLEAVE, null, values);
+        System.out.println("addApply4Leave called???");
     }
 
     private Cursor getApply4Leave(String selection, String[] selectionArgs) {
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_APPLYLEAVE, FROM_APPLYLEAVE, selection, selectionArgs, null, null, null);
+        System.out.println("getApply4Leave called???");
         return cursor;
     }
 
@@ -486,11 +519,16 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(key, value);
         editor.commit();
+        System.out.println("setSharedPreferences called");
+        System.out.println(key);
+        System.out.println(value);
     }
 
     public String getSharedPreferences(String key) {
         preferences = getSharedPreferences(MYPREFERENCES, 0); //0 for private mode
         String keyValue = preferences.getString(key, "");
+        System.out.println("getSharedPreferences called");
+        System.out.println(key);
         return keyValue;
     }
 
