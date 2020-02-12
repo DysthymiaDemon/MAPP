@@ -2,8 +2,10 @@ package mapp.com.sg.projectattendancetracker;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,10 +48,6 @@ public class requestOthersFragment extends Fragment implements View.OnClickListe
         View view = inflater.inflate(R.layout.fragment_requestothers, container, false);
         getActivity().setTitle(R.string.reqOthers);
 
-        //request other EditText title and detail
-        requestTitle = (EditText)getActivity().findViewById(R.id.requestTitleEditText);
-        requestDetail = (EditText)getActivity().findViewById(R.id.requestDetailEditText);
-
         databaseHelper = DatabaseHelper.getInstance(getActivity());
 
         if(getArguments() != null){
@@ -80,9 +78,13 @@ public class requestOthersFragment extends Fragment implements View.OnClickListe
     }
 
     private void addRequestOther(String username){
+        //request other EditText title and detail
+        requestTitle = (EditText)getActivity().findViewById(R.id.requestTitleEditText);
+        requestDetail = (EditText)getActivity().findViewById(R.id.requestDetailEditText);
+
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(USERNAME, username);;
+        values.put(USERNAME, username);
         values.put(TITLE, requestTitle.getText().toString());
         values.put(DETAILS, requestDetail.getText().toString());
         db.insertOrThrow(TABLE_NAME_REQOTHERS, null, values);
@@ -92,6 +94,7 @@ public class requestOthersFragment extends Fragment implements View.OnClickListe
 
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_REQOTHERS, FROM_REQUESTOTHER, selection, selectionArgs, null, null, null);
+        Log.d("Cursor: ", DatabaseUtils.dumpCursorToString(cursor));
         return cursor;
     }
 

@@ -33,7 +33,7 @@ import static mapp.com.sg.projectattendancetracker.Constants.WORKPLACE;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "ronnietan.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
     private static DatabaseHelper databaseHelper;
 
     public DatabaseHelper(Context ctx){

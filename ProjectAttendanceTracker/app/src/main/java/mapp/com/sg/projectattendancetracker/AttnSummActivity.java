@@ -35,6 +35,7 @@ import java.security.spec.ECField;
 import java.util.Calendar;
 
 import static android.provider.BaseColumns._ID;
+import static android.text.style.TtsSpan.ARG_USERNAME;
 import static mapp.com.sg.projectattendancetracker.Constants.ATTNRATE;
 import static mapp.com.sg.projectattendancetracker.Constants.ATTNSTATUS;
 import static mapp.com.sg.projectattendancetracker.Constants.BIRTHDATE;
@@ -80,9 +81,9 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     public static final String MYPREFERENCES = "myPrefs";
     public static final String UsernameKey = "user_name";
     public static final String EmailKey = "email_id";
-    public static final String loadDbProfileKey = "db_profile";
-    public static final String loadDbCurrAttnKey = "db_currattn";
-    public static final String loadDbPastAttnKey = "db_pastattn";
+    public static final String loadDbProfileKey = "db_profile_num";
+    public static final String loadDbCurrAttnKey = "db_currattn_num";
+    public static final String loadDbPastAttnKey = "db_pastattn_num";
 
     //db fetch prep
     private static String[] FROM_PROFILE = {_ID, BIRTHDATE, EMAIL, NAME, JOB, WORKPLACE, MAXANNUAL, SALARYTIER};
@@ -111,7 +112,9 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         //get email, convert to username
         if (getIntent().getStringExtra("EMAIL_ID") != null) {
             email = getIntent().getStringExtra("EMAIL_ID");
+            System.out.println("email="+email);
             username = getUsername(email);
+            System.out.println("username="+username);
             setSharedPreferences(EmailKey, email);
             setSharedPreferences(UsernameKey, username);
 
@@ -124,6 +127,8 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
 
         //profile image
         //loadProfileImg(username);
+        System.out.println("USERNAME = "+username);
+        System.out.println("EMAIL = "+email);
 
         try{
             //profile db
@@ -149,11 +154,11 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
                 showCurrAttn(getCurrAttn());
             }
         }catch (Exception ex){
-            Log.d("currAttn db", "Exception occured", ex);
+            /*Log.d("currAttn db", "Exception occured", ex);*/
             System.out.println(ex);
         }
 
-        try{
+        /*try{
             //pastAttn db
             if (getSharedPreferences(loadDbPastAttnKey) != "1") {
                 addPastAttn(username);
@@ -176,7 +181,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         }catch (Exception ex){
             Log.d("PastAttn db", "Exception occured", ex);
             System.out.println(ex);
-        }
+        }*/
     }
 
     @Override
@@ -194,6 +199,10 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.navApplyForLeave:
                 apply4LeaveFragment apply4leavefragment = apply4LeaveFragment.newInstance(username);
+                apply4LeaveFragment fragment = new apply4LeaveFragment();
+                Bundle args = new Bundle();
+                args.putString(ARG_USERNAME, username);
+                fragment.setArguments(args);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         apply4leavefragment).commit();
                 break;
@@ -268,7 +277,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void submitReport(View button){
-        reportproblemfragment.submitForm(button);
+        reportproblemfragment.submitReport(button);
     }
 
     //general callable methods
@@ -343,7 +352,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         Cursor cursor = db.query(TABLE_NAME_CURRATTN, FROM_CURRATTN, null, null, null, null, null);
 
-        if (cursor.getCount() < 8) {
+        if (cursor.getCount() < 3) {
             db = databaseHelper.getWritableDatabase();
             ContentValues values1 = new ContentValues();
             values1.put(USERNAME, username);
@@ -361,7 +370,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             values2.put(LEAVE, "1");
             db.insertOrThrow(TABLE_NAME_CURRATTN, null, values2);
 
-            ContentValues values3 = new ContentValues();
+            /*ContentValues values3 = new ContentValues();
             values3.put(USERNAME, username);
             values3.put(CLOCKIN, "03/02/2020 07:01:56");
             values3.put(CLOCKOUT, "03/02/2020 18:00:06");
@@ -399,7 +408,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             values7.put(CLOCKOUT, "07/02/2020 18:00:06");
             values7.put(ATTNSTATUS, "1");
             values7.put(LEAVE, "1");
-            db.insertOrThrow(TABLE_NAME_CURRATTN, null, values7);
+            db.insertOrThrow(TABLE_NAME_CURRATTN, null, values7);*/
             System.out.println("addCurrAttn added db entries");
         } else {
             System.out.println("addCurrAttn did not add db entries");
@@ -416,11 +425,12 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void showCurrAttn(Cursor cursor) {
+        System.out.println("showCurrAttn start");
         int countPresent = 0;
         int countLeave = 0;
         int MIA = 0;
 
-        while (cursor.moveToLast()) {
+        while (cursor.moveToNext()) {
             if (cursor.getString(4).equals("1")) {
                 countPresent++;
             } else if (!cursor.getString(5).equals("1")) {
@@ -444,7 +454,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     }
 
     //pastAttn methods
-    private void addPastAttn(String username){
+    /*private void addPastAttn(String username){
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_PASTATTN, FROM_PASTNATTN,null,null,null,null,null);
         if(cursor.getCount() < 5){
@@ -510,7 +520,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         Cursor cursor = db.query(TABLE_NAME_APPLYLEAVE, FROM_APPLYLEAVE, selection, selectionArgs, null, null, null);
         System.out.println("getApply4Leave called???");
         return cursor;
-    }
+    }*/
 
     //SharedPreferences callable methods
 //--------------------------------------------------------------------------------------------------
@@ -529,6 +539,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         String keyValue = preferences.getString(key, "");
         System.out.println("getSharedPreferences called");
         System.out.println(key);
+        System.out.println(keyValue);
         return keyValue;
     }
 

@@ -54,6 +54,7 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        username = getArguments().getString(ARG_USERNAME);
         View view = inflater.inflate(R.layout.fragment_apply4leave, container, false);
         getActivity().setTitle(R.string.apply4leave);
 
@@ -65,18 +66,14 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        //get all editText
-        details = (EditText) getActivity().findViewById(R.id.detailsApplyEditText);
-        leaveFrom = (EditText) getActivity().findViewById(R.id.startEditText);
-        leaveTo = (EditText) getActivity().findViewById(R.id.endEditText);
-        System.out.println("->:"+leaveFrom);
-        System.out.println("->:"+leaveTo);
 
         //init db
         databaseHelper = DatabaseHelper.getInstance(getActivity());
 
+        System.out.println(getArguments());
         if(getArguments() != null){
             username = getArguments().getString(ARG_USERNAME);
+            System.out.println("ARG_USERNAME = "+username);
         }
 
         submitButton = (Button) view.findViewById(R.id.submitReqButton);
@@ -97,12 +94,16 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
                 break;
             case 1:
                 leaveType = "Medical Leave";
+                break;
             case 2:
                 leaveType = "Paternity Leave";
+                break;
             case 3:
                 leaveType = "Annual Leave";
+                break;
             case 4:
                 leaveType = "Emergency Leave";
+                break;
         }
     }
 
@@ -130,7 +131,7 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
         //write to db
         System.out.println("submitForm triggered");
         addApply4Leave(username);
-        System.out.println("addApply4Leave doneS");
+        System.out.println("addApply4Leave done");
 
         //check and confirm
         String selection = USERNAME+" = ?";
@@ -138,7 +139,7 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
         Log.d("username", username);
         Log.d("USERNAME: ", USERNAME);
         Cursor cursorCheck = getApply4Leave(selection, selectionArgs);
-        if(!cursorCheck.moveToLast()){
+        if(cursorCheck.moveToLast()){
             Toast.makeText(getActivity(),"Record Inserted!", Toast.LENGTH_SHORT).show();
             getActivity().getFragmentManager().popBackStack();
         } else {
@@ -149,6 +150,13 @@ public class apply4LeaveFragment extends Fragment implements AdapterView.OnItemS
     //db callable methods
 //--------------------------------------------------------------------------------------------------
     private void addApply4Leave(String username){
+        //get all editText
+        details = (EditText) getActivity().findViewById(R.id.detailsApplyEditText);
+        leaveFrom = (EditText) getActivity().findViewById(R.id.startEditText);
+        leaveTo = (EditText) getActivity().findViewById(R.id.endEditText);
+        System.out.println("->:"+leaveFrom);
+        System.out.println("->:"+leaveTo);
+
         System.out.println(leaveFrom.getText().toString());
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();

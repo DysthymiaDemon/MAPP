@@ -52,9 +52,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(currentUser != null){
-                    startActivity(
-                            new Intent(LoginActivity.this, AttnSummActivity.class)
-                    );
+                    Intent i = new Intent(LoginActivity.this, AttnSummActivity.class);
+                    i.putExtra("EMAIL_ID", currentUser.getEmail());
+                    startActivity(i);
                 }
             }
         };
