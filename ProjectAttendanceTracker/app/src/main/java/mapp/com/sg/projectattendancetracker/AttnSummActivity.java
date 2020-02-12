@@ -158,7 +158,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
             System.out.println(ex);
         }
 
-        /*try{
+        try{
             //pastAttn db
             if (getSharedPreferences(loadDbPastAttnKey) != "1") {
                 addPastAttn(username);
@@ -181,7 +181,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         }catch (Exception ex){
             Log.d("PastAttn db", "Exception occured", ex);
             System.out.println(ex);
-        }*/
+        }
     }
 
     @Override
@@ -454,7 +454,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
     }
 
     //pastAttn methods
-    /*private void addPastAttn(String username){
+    private void addPastAttn(String username){
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor cursor = db.query(TABLE_NAME_PASTATTN, FROM_PASTNATTN,null,null,null,null,null);
         if(cursor.getCount() < 5){
@@ -520,7 +520,7 @@ public class AttnSummActivity extends AppCompatActivity implements View.OnClickL
         Cursor cursor = db.query(TABLE_NAME_APPLYLEAVE, FROM_APPLYLEAVE, selection, selectionArgs, null, null, null);
         System.out.println("getApply4Leave called???");
         return cursor;
-    }*/
+    }
 
     //SharedPreferences callable methods
 //--------------------------------------------------------------------------------------------------

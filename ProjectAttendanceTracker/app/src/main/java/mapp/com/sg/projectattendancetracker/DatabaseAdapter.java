@@ -46,7 +46,7 @@ public class DatabaseAdapter {
                 }
             }
         }catch (SQLException ex){
-            ex.printStackTrace();;
+            ex.printStackTrace();
         }
 
         return pastAttns;
